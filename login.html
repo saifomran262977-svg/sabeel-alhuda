@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="description" content="صفحة الدخول | سبيل الهدى">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>دخول | سبيل الهدى</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="animations.css">
+
+    <style>
+        /* ═══ تنسيق خاص بصفحة الدخول ═══ */
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: var(--shadow-lg), 0 0 60px rgba(212, 175, 55, 0.08);
+            position: relative;
+            overflow: hidden;
+            animation: cardEnter 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes cardEnter {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.06), transparent);
+            animation: shine 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        .login-icon-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .login-lock-icon {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            box-shadow: 0 0 50px var(--gold-glow), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            animation: lockPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 50px var(--gold-glow); }
+            50% { transform: scale(1.05); box-shadow: 0 0 80px var(--gold-glow); }
+        }
+
+        .login-lock-icon svg {
+            width: 42px;
+            height: 42px;
+            stroke: #000;
+            stroke-width: 2;
+        }
+
+        .login-title {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--gold-light), var(--emerald-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .password-field {
+            position: relative;
+        }
+
+        .password-field input {
+            width: 100%;
+            padding: 18px 52px 18px 18px;
+            background: var(--bg-glass-strong);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 3px;
+            transition: all var(--transition);
+            outline: none;
+        }
+
+        .password-field input::placeholder {
+            color: var(--text-dim);
+            letter-spacing: 8px;
+            font-weight: 400;
+        }
+
+        .password-field input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12), 0 0 30px var(--gold-glow);
+            background: rgba(212, 175, 55, 0.03);
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all var(--transition);
+        }
+
+        .toggle-password:hover {
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .toggle-password svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #000;
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 800;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            box-shadow: 0 8px 25px var(--gold-glow);
+            transition: all var(--transition);
+            margin-top: 4px;
+        }
+
+        .login-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: #000;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px var(--gold-glow);
+        }
+
+        .login-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 15px var(--gold-glow);
+        }
+
+        .login-error {
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-8px); }
+            80% { transform: translateX(8px); }
+        }
+
+        .login-note {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .login-note .verse {
+            font-family: var(--font-quran);
+            font-size: 0.9rem;
+            color: var(--gold);
+            margin-bottom: 8px;
+            line-height: 1.9;
+        }
+
+        .back-home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 14px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition);
+        }
+
+        .back-home:hover {
+            border-color: var(--emerald);
+            color: var(--emerald-light);
+            transform: translateX(4px);
+        }
+
+        .back-home svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 22px;
+            }
+            .login-lock-icon {
+                width: 75px;
+                height: 75px;
+            }
+            .login-lock-icon svg {
+                width: 34px;
+                height: 34px;
+            }
+            .login-title {
+                font-size: 1.35rem;
+            }
+        }
+
+        /* إخفاء العناصر الزائدة في صفحة الدخول */
+        .topbar, .nav-menu, .nav-overlay, .scroll-progress, .preloader {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- خلفيات متوهجة -->
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="ambient ambient-3"></div>
+    <div class="grid-overlay"></div>
+    <div class="stars-overlay"></div>
+
+    <!-- صفحة الدخول -->
+    <div class="login-wrapper">
+        <div class="login-card">
+
+            <!-- الأيقونة -->
+            <div class="login-icon-wrap">
+                <div class="login-lock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- العنوان -->
+            <h1 class="login-title">دخول المنصة</h1>
+            <p class="login-subtitle">
+                هذه المنصة محمية. يرجى إدخال الرمز للمتابعة.
+            </p>
+
+            <!-- النموذج -->
+            <form class="login-form" id="loginForm" autocomplete="off" novalidate>
+                <div class="password-field">
+                    <input
+                        type="password"
+                        id="passwordInput"
+                        placeholder="••••"
+                        inputmode="numeric"
+                        autocomplete="off"
+                        required
+                    >
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="إظهار الرمز">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="login-error" id="loginError"></div>
+
+                <button type="submit" class="login-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    دخول
+                </button>
+            </form>
+
+            <!-- العودة للرئيسية -->
+            <a href="index.html" class="back-home">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+                العودة إلى الرئيسية
+            </a>
+
+            <!-- اقتباس -->
+            <div class="login-note">
+                <div class="verse">﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾</div>
+                <div>سبيل الهدى — منصة إسلامية شاملة</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ملفات البرمجة -->
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+
+</body>
+  </html>
