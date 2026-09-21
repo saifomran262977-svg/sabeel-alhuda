@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="description" content="القرآن الكريم — 114 سورة كاملة بالخط العثماني | سبيل الهدى">
+    <meta name="author" content="سيف بن عمران (أبو البراء المصري)">
+
+    <title>القرآن الكريم | سبيل الهدى</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="animations.css">
+
+    <style>
+        /* ═══ تنسيق صفحة فهرس السور ═══ */
+        .quran-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 16px 80px;
+        }
+
+        .quran-header {
+            text-align: center;
+            padding: 30px 0 40px;
+            position: relative;
+        }
+
+        .quran-header-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--gold-glow);
+            font-size: 2.5rem;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .quran-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold-light), var(--emerald-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .quran-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* شريط البحث */
+        .search-box {
+            position: relative;
+            margin: 0 auto 20px;
+            max-width: 500px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 16px 52px 16px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all var(--transition);
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+        }
+
+        .search-box svg {
+            position: absolute;
+            top: 50%;
+            right: 18px;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--gold);
+            pointer-events: none;
+        }
+
+        /* فلاتر */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 22px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #000;
+            border-color: transparent;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        /* شبكة السور */
+        .surah-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .surah-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 900px) {
+            .surah-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .surah-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: inherit;
+            transition: all var(--transition);
+            overflow: hidden;
+        }
+
+        .surah-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), transparent);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+
+        .surah-card:hover::before {
+            left: 100%;
+        }
+
+        .surah-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .surah-card:active {
+            transform: scale(0.98);
+        }
+
+        .surah-number {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            color: var(--gold);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        /* زخرفة حول الرقم */
+        .surah-number::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border: 1px dashed rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .surah-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .surah-name {
+            font-family: var(--font-quran);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .surah-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .surah-type {
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .surah-type.makki {
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .surah-type.madani {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--emerald-light);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        /* حالة عدم وجود نتائج */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+        }
+
+        .no-results div {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        /* شاشة تحميل صغيرة */
+        .loading-surahs {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* شريط معلومات */
+        .info-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .info-bar b {
+            color: var(--gold);
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="grid-overlay"></div>
+    <div class="stars-overlay"></div>
+
+    <!-- الترويسة -->
+    <header class="topbar" id="topbar">
+        <a href="index.html" class="brand">
+            <div class="logo-icon"><span>ه</span></div>
+            <div class="logo-text">
+                <h1>سبيل الهدى</h1>
+                <p>القرآن الكريم</p>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="icon-btn theme-toggle" id="themeToggle" aria-label="تغيير المظهر">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                </svg>
+            </button>
+            <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- القائمة الجانبية -->
+    <div class="nav-overlay" id="navOverlay"></div>
+    <nav class="nav-menu" id="navMenu">
+        <div class="nav-header">
+            <div class="nav-logo"><span>ه</span></div>
+            <div class="nav-title">
+                <b>سبيل الهدى</b>
+                <small>منصة إسلامية شاملة</small>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                الرئيسية
+            </a>
+            <a href="quran.html" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                القرآن الكريم
+            </a>
+            <a href="hadith.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                السنّة النبوية
+            </a>
+            <a href="scholars.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                أهل العلم
+            </a>
+            <a href="news.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/></svg>
+                الأخبار
+            </a>
+            <a href="athkar.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                الأذكار
+            </a>
+        </div>
+        <div class="nav-footer">
+            <p>﴿ وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ ﴾</p>
+        </div>
+    </nav>
+
+    <!-- المحتوى -->
+    <main class="quran-page">
+
+        <!-- الترويسة -->
+        <div class="quran-header">
+            <div class="quran-header-icon">📖</div>
+            <h1>القرآن الكريم</h1>
+            <p>اقرأ سور القرآن الكريم كاملة بالخط العثماني. اضغط على أي سورة لعرض آياتها.</p>
+        </div>
+
+        <!-- البحث -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحث عن سورة...">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+        </div>
+
+        <!-- الفلاتر -->
+        <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">الكل</button>
+            <button class="filter-btn" data-filter="makki">مكية</button>
+            <button class="filter-btn" data-filter="madani">مدنية</button>
+        </div>
+
+        <!-- شريط المعلومات -->
+        <div class="info-bar">
+            <span>عدد السور: <b>114</b></span>
+            <span>المعروضة: <b id="countDisplay">114</b></span>
+        </div>
+
+        <!-- شبكة السور -->
+        <div class="surah-grid" id="surahGrid">
+            <div class="loading-surahs">
+                <div class="spinner"></div>
+                <p>جارٍ تحميل السور...</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-quote">
+            <span>ﷲ</span>
+            الله أكبر — والعزة لله ولرسوله وللمؤمنين
+        </div>
+        <div class="footer-bottom">
+            <small>© <span id="year"></span> سبيل الهدى — صدقة لله</small>
+        </div>
+    </footer>
+
+    <button class="fab fab-top" id="backToTop" aria-label="العودة للأعلى">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+        </svg>
+    </button>
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    <script src="auth.js"></script>
+
+    <script>
+        // ═══════════════════════════════════════════
+        // بيانات السور الـ 114 (مدمجة)
+        // ═══════════════════════════════════════════
+        const surahsList = [
+            { n: 1, name: "الفاتحة", type: "makki", ayahs: 7 },
+            { n: 2, name: "البقرة", type: "madani", ayahs: 286 },
+            { n: 3, name: "آل عمران", type: "madani", ayahs: 200 },
+            { n: 4, name: "النساء", type: "madani", ayahs: 176 },
+            { n: 5, name: "المائدة", type: "madani", ayahs: 120 },
+            { n: 6, name: "الأنعام", type: "makki", ayahs: 165 },
+            { n: 7, name: "الأعراف", type: "makki", ayahs: 206 },
+            { n: 8, name: "الأنفال", type: "madani", ayahs: 75 },
+            { n: 9, name: "التوبة", type: "madani", ayahs: 129 },
+            { n: 10, name: "يونس", type: "makki", ayahs: 109 },
+            { n: 11, name: "هود", type: "makki", ayahs: 123 },
+            { n: 12, name: "يوسف", type: "makki", ayahs: 111 },
+            { n: 13, name: "الرعد", type: "madani", ayahs: 43 },
+            { n: 14, name: "إبراهيم", type: "makki", ayahs: 52 },
+            { n: 15, name: "الحجر", type: "makki", ayahs: 99 },
+            { n: 16, name: "النحل", type: "makki", ayahs: 128 },
+            { n: 17, name: "الإسراء", type: "makki", ayahs: 111 },
+            { n: 18, name: "الكهف", type: "makki", ayahs: 110 },
+            { n: 19, name: "مريم", type: "makki", ayahs: 98 },
+            { n: 20, name: "طه", type: "makki", ayahs: 135 },
+            { n: 21, name: "الأنبياء", type: "makki", ayahs: 112 },
+            { n: 22, name: "الحج", type: "madani", ayahs: 78 },
+            { n: 23, name: "المؤمنون", type: "makki", ayahs: 118 },
+            { n: 24, name: "النور", type: "madani", ayahs: 64 },
+            { n: 25, name: "الفرقان", type: "makki", ayahs: 77 },
+            { n: 26, name: "الشعراء", type: "makki", ayahs: 227 },
+            { n: 27, name: "النمل", type: "makki", ayahs: 93 },
+            { n: 28, name: "القصص", type: "makki", ayahs: 88 },
+            { n: 29, name: "العنكبوت", type: "makki", ayahs: 69 },
+            { n: 30, name: "الروم", type: "makki", ayahs: 60 },
+            { n: 31, name: "لقمان", type: "makki", ayahs: 34 },
+            { n: 32, name: "السجدة", type: "makki", ayahs: 30 },
+            { n: 33, name: "الأحزاب", type: "madani", ayahs: 73 },
+            { n: 34, name: "سبأ", type: "makki", ayahs: 54 },
+            { n: 35, name: "فاطر", type: "makki", ayahs: 45 },
+            { n: 36, name: "يس", type: "makki", ayahs: 83 },
+            { n: 37, name: "الصافات", type: "makki", ayahs: 182 },
+            { n: 38, name: "ص", type: "makki", ayahs: 88 },
+            { n: 39, name: "الزمر", type: "makki", ayahs: 75 },
+            { n: 40, name: "غافر", type: "makki", ayahs: 85 },
+            { n: 41, name: "فصلت", type: "makki", ayahs: 54 },
+            { n: 42, name: "الشورى", type: "makki", ayahs: 53 },
+            { n: 43, name: "الزخرف", type: "makki", ayahs: 89 },
+            { n: 44, name: "الدخان", type: "makki", ayahs: 59 },
+            { n: 45, name: "الجاثية", type: "makki", ayahs: 37 },
+            { n: 46, name: "الأحقاف", type: "makki", ayahs: 35 },
+            { n: 47, name: "محمد", type: "madani", ayahs: 38 },
+            { n: 48, name: "الفتح", type: "madani", ayahs: 29 },
+            { n: 49, name: "الحجرات", type: "madani", ayahs: 18 },
+            { n: 50, name: "ق", type: "makki", ayahs: 45 },
+            { n: 51, name: "الذاريات", type: "makki", ayahs: 60 },
+            { n: 52, name: "الطور", type: "makki", ayahs: 49 },
+            { n: 53, name: "النجم", type: "makki", ayahs: 62 },
+            { n: 54, name: "القمر", type: "makki", ayahs: 55 },
+            { n: 55, name: "الرحمن", type: "madani", ayahs: 78 },
+            { n: 56, name: "الواقعة", type: "makki", ayahs: 96 },
+            { n: 57, name: "الحديد", type: "madani", ayahs: 29 },
+            { n: 58, name: "المجادلة", type: "madani", ayahs: 22 },
+            { n: 59, name: "الحشر", type: "madani", ayahs: 24 },
+            { n: 60, name: "الممتحنة", type: "madani", ayahs: 13 },
+            { n: 61, name: "الصف", type: "madani", ayahs: 14 },
+            { n: 62, name: "الجمعة", type: "madani", ayahs: 11 },
+            { n: 63, name: "المنافقون", type: "madani", ayahs: 11 },
+            { n: 64, name: "التغابن",type: "madani", ayahs: 18 },
+            { n: 65, name: "الطلاق", type: "madani", ayahs: 12 },
+            { n: 66, name: "التحريم", type: "madani", ayahs: 12 },
+            { n: 67, name: "الملك", type: "makki", ayahs: 30 },
+            { n: 68, name: "القلم", type: "makki", ayahs: 52 },
+            { n: 69, name: "الحاقة", type: "makki", ayahs: 52 },
+            { n: 70, name: "المعارج", type: "makki", ayahs: 44 },
+            { n: 71, name: "نوح", type: "makki", ayahs: 28 },
+            { n: 72, name: "الجن", type: "makki", ayahs: 28 },
+            { n: 73, name: "المزمل", type: "makki", ayahs: 20 },
+            { n: 74, name: "المدثر", type: "makki", ayahs: 56 },
+            { n: 75, name: "القيامة", type: "makki", ayahs: 40 },
+            { n: 76, name: "الإنسان", type: "madani", ayahs: 31 },
+            { n: 77, name: "المرسلات", type: "makki", ayahs: 50 },
+            { n: 78, name: "النبأ", type: "makki", ayahs: 40 },
+            { n: 79, name: "النازعات", type: "makki", ayahs: 46 },
+            { n: 80, name: "عبس", type: "makki", ayahs: 42 },
+            { n: 81, name: "التكوير", type: "makki", ayahs: 29 },
+            { n: 82, name: "الانفطار", type: "makki", ayahs: 19 },
+            { n: 83, name: "المطففين", type: "makki", ayahs: 36 },
+            { n: 84, name: "الانشقاق", type: "makki", ayahs: 25 },
+            { n: 85, name: "البروج", type: "makki", ayahs: 22 },
+            { n: 86, name: "الطارق", type: "makki", ayahs: 17 },
+            { n: 87, name: "الأعلى", type: "makki", ayahs: 19 },
+            { n: 88, name: "الغاشية", type: "makki", ayahs: 26 },
+            { n: 89, name: "الفجر", type: "makki", ayahs: 30 },
+            { n: 90, name: "البلد", type: "makki", ayahs: 20 },
+            { n: 91, name: "الشمس", type: "makki", ayahs: 15 },
+            { n: 92, name: "الليل", type: "makki", ayahs: 21 },
+            { n: 93, name: "الضحى", type: "makki", ayahs: 11 },
+            { n: 94, name: "الشرح", type: "makki", ayahs: 8 },
+            { n: 95, name: "التين", type: "makki", ayahs: 8 },
+            { n: 96, name: "العلق", type: "makki", ayahs: 19 },
+            { n: 97, name: "القدر", type: "makki", ayahs: 5 },
+            { n: 98, name: "البينة", type: "madani", ayahs: 8 },
+            { n: 99, name: "الزلزلة", type: "madani", ayahs: 8 },
+            { n: 100, name: "العاديات", type: "makki", ayahs: 11 },
+            { n: 101, name: "القارعة", type: "makki", ayahs: 11 },
+            { n: 102, name: "التكاثر", type: "makki", ayahs: 8 },
+            { n: 103, name: "العصر", type: "makki", ayahs: 3 },
+            { n: 104, name: "الهمزة", type: "makki", ayahs: 9 },
+            { n: 105, name: "الفيل", type: "makki", ayahs: 5 },
+            { n: 106, name: "قريش", type: "makki", ayahs: 4 },
+            { n: 107, name: "الماعون", type: "makki", ayahs: 7 },
+            { n: 108, name: "الكوثر", type: "makki", ayahs: 3 },
+            { n: 109, name: "الكافرون", type: "makki", ayahs: 6 },
+            { n: 110, name: "النصر", type: "madani", ayahs: 3 },
+            { n: 111, name: "المسد", type: "makki", ayahs: 5 },
+            { n: 112, name: "الإخلاص", type: "makki", ayahs: 4 },
+            { n: 113, name: "الفلق", type: "makki", ayahs: 5 },
+            { n: 114, name: "الناس", type: "makki", ayahs: 6 }
+        ];
+
+        // ═══════════════════════════════════════════
+        // عرض السور
+        // ═══════════════════════════════════════════
+        const grid = document.getElementById('surahGrid');
+        const searchInput = document.getElementById('searchInput');
+        const countDisplay = document.getElementById('countDisplay');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        function renderSurahs() {
+            const filtered = surahsList.filter(s => {
+                const matchFilter = currentFilter === 'all' || s.type === currentFilter;
+                const matchSearch = currentSearch === '' || s.name.includes(currentSearch) || s.n.toString() === currentSearch;
+                return matchFilter && matchSearch;
+            });
+
+            countDisplay.textContent = filtered.length;
+            grid.innerHTML = '';
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <div>🔍</div>
+                        <p>لا توجد نتائج مطابقة.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach((s, i) => {
+                const card = document.createElement('a');
+                card.href = `surah.html?num=${s.n}`;
+                card.className = 'surah-card';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                card.style.transition = `opacity 0.4s ease ${Math.min(i * 0.01, 0.4)}s, transform 0.4s ease ${Math.min(i * 0.01, 0.4)}s`;
+
+                card.innerHTML = `
+                    <div class="surah-number">${s.n}</div>
+                    <div class="surah-info">
+                        <div class="surah-name">${s.name}</div>
+                        <div class="surah-meta">
+                            <span class="surah-type ${s.type}">${s.type === 'makki' ? 'مكية' : 'مدنية'}</span>
+                            <span>${s.ayahs} آية</span>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+
+                // تأثير الظهور
+                requestAnimationFrame(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                });
+            });
+        }
+
+        // البحث
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.trim();
+            renderSurahs();
+        });
+
+        // الفلاتر
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderSurahs();
+            });
+        });
+
+        // العرض الأولي
+        renderSurahs();
+    </script>
+
+</body>
+</html>
