@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="description" content="سبيل الهدى — منصة إسلامية شاملة: القرآن الكريم، السنّة النبوية، أهل العلم، والأخبار.">
+    <meta name="author" content="سيف بن عمران (أبو البراء المصري)">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="سبيل الهدى | منصة إسلامية شاملة">
+    <meta property="og:description" content="منصة إسلامية شاملة — قرآن، حديث، علماء، أخبار.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_AR">
+
+    <title>سبيل الهدى | منصة إسلامية شاملة</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+
+    <!-- شاشة التحميل -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo"><span>ه</span></div>
+            <h2 class="preloader-title">سبيل الهدى</h2>
+            <div class="preloader-bar"><span></span></div>
+            <p class="preloader-text">﴿ وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ ﴾</p>
+        </div>
+    </div>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="ambient ambient-3"></div>
+    <div class="ambient ambient-4"></div>
+    <div class="grid-overlay"></div>
+    <div class="stars-overlay"></div>
+
+    <!-- شريط التنقل العلوي -->
+    <header class="topbar" id="topbar">
+        <a href="index.html" class="brand">
+            <div class="logo-icon"><span>ه</span></div>
+            <div class="logo-text">
+                <h1>سبيل الهدى</h1>
+                <p>منصة إسلامية شاملة</p>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="icon-btn theme-toggle" id="themeToggle" aria-label="تغيير المظهر">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+            <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- القائمة الجانبية -->
+    <div class="nav-overlay" id="navOverlay"></div>
+    <nav class="nav-menu" id="navMenu" aria-label="القائمة الرئيسية">
+        <div class="nav-header">
+            <div class="nav-logo"><span>ه</span></div>
+            <div class="nav-title">
+                <b>سبيل الهدى</b>
+                <small>منصة إسلامية شاملة</small>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                الرئيسية
+            </a>
+            <a href="quran.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                القرآن الكريم
+            </a>
+            <a href="hadith.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                السنّة النبوية
+            </a>
+            <a href="scholars.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                أهل العلم
+            </a>
+            <a href="news.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
+                الأخبار
+            </a>
+        </div>
+
+        <div class="nav-divider"></div>
+        <div class="nav-label">أذكار</div>
+
+        <div class="nav-links">
+            <a href="athkar.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                الأذكار
+            </a>
+        </div>
+
+        <div class="nav-divider"></div>
+        <div class="nav-label">المنصة</div>
+
+        <div class="nav-links">
+            <a href="about.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                عن المنصة
+            </a>
+            <a href="contact.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                التواصل
+            </a>
+            <a href="login.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                دخول
+            </a>
+        </div>
+
+        <div class="nav-footer">
+            <p>﴿ وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ ﴾</p>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+
+        <!-- الترحيب -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                منصة إسلامية شاملة
+            </div>
+
+            <h2 class="hero-title">
+                سبيل <span class="gradient-text">الهدى</span>
+            </h2>
+
+            <p class="hero-subtitle">
+                ﴿ وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ ﴾
+            </p>
+
+            <p class="hero-welcome">
+                منصة إسلامية تجمع لك القرآن الكريم، والسنّة النبوية، وسير أهل العلم، والأخبار — في مكان واحد، بتصميم فخم وتجربة سلسة. نسأل الله الإخلاص والقبول.
+            </p>
+
+            <div class="hero-actions">
+                <a href="quran.html" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    ابدأ بالقرآن
+                </a>
+                <a href="hadith.html" class="btn btn-ghost">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    السنّة النبوية
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">114</span>
+                    <span class="stat-label">سورة</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">حديث</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">أئمة</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- الأقسام الرئيسية -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                </div>
+                <div class="section-title-wrap">
+                    <span class="section-kicker">استكشف</span>
+                    <h3 class="section-title">الأقسام الرئيسية</h3>
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <a href="quran.html" class="card-item">
+                    <div class="card-glow"></div>
+                    <div class="card-icon">📖</div>
+                    <h4>القرآن الكريم</h4>
+                    <p>114 سورة كاملة بالخط العثماني، مع التفسير والتلاوة.</p>
+                    <span class="card-arrow">←</span>
+                </a>
+
+                <a href="hadith.html" class="card-item">
+                    <div class="card-glow"></div>
+                    <div class="card-icon">📚</div>
+                    <h4>السنّة النبوية</h4>
+                    <p>مكتبة أحاديث صحيحة مع الأسانيد ودرجات الصحة.</p>
+                    <span class="card-arrow">←</span>
+                </a>
+
+                <a href="scholars.html" class="card-item">
+                    <div class="card-glow"></div>
+                    <div class="card-icon">👨‍🏫</div>
+                    <h4>أهل العلم</h4>
+                    <p>سير أعلام الأمة: حياتهم، علمهم، مؤلفاتهم.</p>
+                    <span class="card-arrow">←</span>
+                </a>
+
+                <a href="news.html" class="card-item">
+                    <div class="card-glow"></div>
+                    <div class="card-icon">📰</div>
+                    <h4>الأخبار</h4>
+                    <p>آخر مستجدات المنصة، والكتب، والإضافات الجديدة.</p>
+                    <span class="card-arrow">←</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- الأذكار -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon-wrap emerald">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </div>
+                <div class="section-title-wrap">
+                    <span class="section-kicker">خدمات</span>
+                    <h3 class="section-title">الأذكار والأدعية</h3>
+                </div>
+            </div>
+
+            <div class="tools-grid single-tool">
+                <a href="athkar.html" class="tool-item">
+                    <div class="tool-icon">📿</div>
+                    <h4>الأذكار والأدعية</h4>
+                    <p>أذكار الصباح والمساء، وأدعية مأثورة، مع عدّاد إلكتروني ونسخ سريع.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- الاقتباس -->
+        <section class="quote-section">
+            <div class="quote-icon">❝</div>
+            <p class="quote-text">
+                ﴿ وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ وَهُوَ فِي الْآخِرَةِ مِنَ الْخَاسِرِينَ ﴾
+            </p>
+            <span class="quote-author">— سورة آل عمران: الآية ٨٥</span>
+        </section>
+
+    </main>
+
+    <!-- التذييل -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo"><span>ه</span></div>
+                <b>سبيل الهدى</b>
+                <span>منصة إسلامية شاملة</span>
+                <p class="footer-desc">خدمية ودعوية — صدقة لله، لا نبتغي بها رياءً ولا سمعةً.</p>
+            </div>
+
+            <div class="footer-links">
+                <b>الأقسام</b>
+                <a href="quran.html">القرآن الكريم</a>
+                <a href="hadith.html">السنّة النبوية</a>
+                <a href="scholars.html">أهل العلم</a>
+                <a href="news.html">الأخبار</a>
+            </div>
+
+            <div class="footer-links">
+                <b>خدمات</b>
+                <a href="athkar.html">الأذكار والأدعية</a>
+            </div>
+
+            <div class="footer-links">
+                <b>المنصة</b>
+                <a href="about.html">عن المنصة</a>
+                <a href="contact.html">التواصل</a>
+                <a href="login.html">دخول</a>
+            </div>
+        </div>
+
+        <div class="footer-quote">
+            <span>ﷲ</span>
+            الله أكبر — والعزة لله ولرسوله وللمؤمنين
+        </div>
+
+        <div class="footer-bottom">
+            <small>© <span id="year"></span> سبيل الهدى — صدقة لله</small>
+            <small>صُنع بـ <span class="heart">♥</span> لخدمة الدين</small>
+        </div>
+    </footer>
+
+    <button class="fab fab-top" id="backToTop" aria-label="العودة للأعلى">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+        </svg>
+    </button>
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    <script src="auth.js"></script>
+
+</body>
+                  </html>
