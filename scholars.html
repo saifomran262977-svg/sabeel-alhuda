@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="description" content="أهل العلم | سبيل الهدى - سير أعلام الأمة: الإمام أحمد بن حنبل، ابن تيمية، ابن القيم، محمد بن عبد الوهاب">
+    <meta name="author" content="سيف بن عمران (أبو البراء المصري)">
+
+    <title>أهل العلم | سبيل الهدى</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .scholars-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 16px 80px;
+        }
+
+        .scholars-header {
+            text-align: center;
+            padding: 30px 0 40px;
+        }
+
+        .scholars-header-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--gold-glow);
+            font-size: 2.5rem;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .scholars-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold-light), var(--emerald-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .scholars-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 550px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* شبكة العلماء */
+        .scholars-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .scholar-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 26px 22px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            text-decoration: none;
+            color: inherit;
+            transition: all var(--transition);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .scholar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), transparent);
+            transition: left 0.8s ease;
+            pointer-events: none;
+        }
+
+        .scholar-card:hover::before {
+            left: 100%;
+        }
+
+        .scholar-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gold), var(--emerald));
+        }
+
+        .scholar-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--gold);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .scholar-card:active {
+            transform: scale(0.99);
+        }
+
+        .scholar-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .scholar-avatar {
+            width: 72px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--gold-glow), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .scholar-avatar::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 1px dashed rgba(212, 175, 55, 0.5);
+            border-radius: 50%;
+        }
+
+        .scholar-avatar span {
+            font-family: var(--font-quran);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #000;
+            line-height: 1;
+        }
+
+        .scholar-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .scholar-name {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .scholar-nick {
+            font-family: var(--font-quran);
+            font-size: 0.9rem;
+            color: var(--emerald-light);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .scholar-dates {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .scholar-bio {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            padding: 14px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scholar-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .scholar-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .scholar-tag {
+            font-size: 0.68rem;
+            padding: 4px 10px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--border-emerald);
+            border-radius: 50px;
+            color: var(--emerald-light);
+            font-weight: 700;
+        }
+
+        .scholar-read {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--gold);
+            transition: all var(--transition);
+        }
+
+        .scholar-read svg {
+            width: 16px;
+            height: 16px;
+            transition: transform var(--transition);
+        }
+
+        .scholar-card:hover .scholar-read svg {
+            transform: translateX(-4px);
+        }
+
+        /* شريط معلومات */
+        .scholars-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 18px 24px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .scholars-info .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .scholars-info .item b {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .scholars-info .item span {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        @media (min-width: 640px) {
+            .scholars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .scholar-avatar {
+                width: 60px;
+                height: 60px;
+            }
+            .scholar-avatar span {
+                font-size: 1.8rem;
+            }
+            .scholar-name {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="grid-overlay"></div>
+    <div class="stars-overlay"></div>
+
+    <header class="topbar" id="topbar">
+        <a href="index.html" class="brand">
+            <div class="logo-icon"><span>ه</span></div>
+            <div class="logo-text">
+                <h1>سبيل الهدى</h1>
+                <p>أهل العلم</p>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="icon-btn theme-toggle" id="themeToggle" aria-label="تغيير المظهر">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+            </button>
+            <button class="menu-btn" id="menuBtn" aria-label="القائمة">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+    <nav class="nav-menu" id="navMenu">
+        <div class="nav-header">
+            <div class="nav-logo"><span>ه</span></div>
+            <div class="nav-title">
+                <b>سبيل الهدى</b>
+                <small>منصة إسلامية شاملة</small>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> الرئيسية</a>
+            <a href="quran.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> القرآن الكريم</a>
+            <a href="hadith.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> السنّة النبوية</a>
+            <a href="scholars.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> أهل العلم</a>
+            <a href="news.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/></svg> الأخبار</a>
+            <a href="athkar.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83"/></svg> الأذكار</a>
+        </div>
+    </nav>
+
+    <main class="scholars-page">
+
+        <div class="scholars-header">
+            <div class="scholars-header-icon">👨‍🏫</div>
+            <h1>أهل العلم</h1>
+            <p>سِيَر أعلام الأمة، الذين حفظ اللهُ بهم الدينَ، ورفع بهم رايةَ العلم. تعرّف على حياتهم، وجهادهم، ومؤلفاتهم.</p>
+        </div>
+
+        <div class="scholars-info">
+            <div class="item">
+                <b>4</b>
+                <span>أئمة</span>
+            </div>
+            <div class="item">
+                <b>900+</b>
+                <span>سنة من العلم</span>
+            </div>
+            <div class="item">
+                <b>200+</b>
+                <span>مؤلف</span>
+            </div>
+        </div>
+
+        <div class="scholars-grid">
+
+            <!-- الإمام أحمد بن حنبل -->
+            <a href="ahmad.html" class="scholar-card">
+                <div class="scholar-top">
+                    <div class="scholar-avatar"><span>أ</span></div>
+                    <div class="scholar-info">
+                        <div class="scholar-name">الإمام أحمد بن حنبل</div>
+                        <div class="scholar-nick">إمام أهل السنة والجماعة</div>
+                        <div class="scholar-dates">١٦٤ — ٢٤١ هـ | ٧٨٠ — ٨٥٥ م</div>
+                    </div>
+                </div>
+                <p class="scholar-bio">
+                    أحد الأئمة الأربعة، صاحب المسند، وإمام أهل السنة في فتنة خلق القرآن. ضُرب بالسيوط فلم يَرجِع عن الحق. قال عنه علي بن المديني: «إنَّ اللهَ أعزَّ هذا الدينَ برجلين: أبو بكرٍ يومَ الردة، وأحمدُ بنُ حنبلٍ يومَ الفتنة».
+                </p>
+                <div class="scholar-footer">
+                    <div class="scholar-tags">
+                        <span class="scholar-tag">الأئمة الأربعة</span>
+                        <span class="scholar-tag">المسند</span>
+                    </div>
+                    <span class="scholar-read">
+                        اقرأ السيرة
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"/>
+                            <polyline points="12 19 5 12 12 5"/>
+                        </svg>
+                    </span>
+                </div>
+            </a>
+
+            <!-- شيخ الإسلام ابن تيمية -->
+            <a href="ibn-taymiyyah.html" class="scholar-card">
+                <div class="scholar-top">
+                    <div class="scholar-avatar"><span>ت</span></div>
+                    <div class="scholar-info">
+                        <div class="scholar-name">شيخ الإسلام ابن تيمية</div>
+                        <div class="scholar-nick">شيخ الإسلام والمسلمين</div>
+                        <div class="scholar-dates">٦٦١ — ٧٢٨ هـ | ١٢٦٣ — ١٣٢٨ م</div>
+                    </div>
+                </div>
+                <p class="scholar-bio">
+                    مجدد القرن السابع، وإمام المصلحين. جمع بين العلم والجهاد والدعوة. صاحب «مجموع الفتاوى»، و«منهاج السنة»، و«الجواب الصحيح». صبر على السجن والابتلاء، ولم يَرجِع عن قول الحق.
+                </p>
+                <div class="scholar-footer">
+                    <div class="scholar-tags">
+                        <span class="scholar-tag">المجددون</span>
+                        <span class="scholar-tag">مجموع الفتاوى</span>
+                    </div>
+                    <span class="scholar-read">
+                        اقرأ السيرة
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"/>
+                            <polyline points="12 19 5 12 12 5"/>
+                        </svg>
+                    </span>
+                </div>
+            </a>
+
+            <!-- الإمام ابن القيم -->
+            <a href="ibn-qayyim.html" class="scholar-card">
+                <div class="scholar-top">
+                    <div class="scholar-avatar"><span>ق</span></div>
+                    <div class="scholar-info">
+                        <div class="scholar-name">الإمام ابن القيم الجوزية</div>
+                        <div class="scholar-nick">ملك العلماء في التزكية</div>
+                        <div class="scholar-dates">٦٩١ — ٧٥١ هـ | ١٢٩٢ — ١٣٥٠ م</div>
+                    </div>
+                </div>
+                <p class="scholar-bio">
+                    تلميذ ابن تيمية، وصاحب «مدارج السالكين»، و«زاد المعاد»، و«إغاثة اللهفان». جمع بين علم الحديث والتفسير والفقه، وبراعة في تزكية النفوس وعلاج القلوب. كتبه اليوم من أعظم مراجع طلاب العلم.
+                </p>
+                <div class="scholar-footer">
+                    <div class="scholar-tags">
+                        <span class="scholar-tag">التزكية</span>
+                        <span class="scholar-tag">مدارج السالكين</span>
+                    </div>
+                    <span class="scholar-read">
+                        اقرأ السيرة
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"/>
+                            <polyline points="12 19 5 12 12 5"/>
+                        </svg>
+                    </span>
+                </div>
+            </a>
+
+            <!-- الإمام محمد بن عبد الوهاب -->
+            <a href="abdulwahhab.html" class="scholar-card">
+                <div class="scholar-top">
+                    <div class="scholar-avatar"><span>م</span></div>
+                    <div class="scholar-info">
+                        <div class="scholar-name">الإمام محمد بن عبد الوهاب</div>
+                        <div class="scholar-nick">المجدِّد · إمام الدعوة الإصلاحية</div>
+                        <div class="scholar-dates">١١١٥ — ١٢٠٦ هـ | ١٧٠٣ — ١٧٩٢ م</div>
+                    </div>
+                </div>
+                <p class="scholar-bio">
+                    مجدد القرن الثاني عشر الهجري، وإمام الدعوة الإصلاحية. أعاد للأمة عقيدتها النقية، ودعا إلى التوحيد ومحاربة الشرك والبدع. صاحب «كتاب التوحيد»، و«ثلاثة الأصول»، و«نواقض الإسلام».
+                </p>
+                <div class="scholar-footer">
+                    <div class="scholar-tags">
+                        <span class="scholar-tag">المجددون</span>
+                        <span class="scholar-tag">كتاب التوحيد</span>
+                    </div>
+                    <span class="scholar-read">
+                        اقرأ السيرة
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"/>
+                            <polyline points="12 19 5 12 12 5"/>
+                        </svg>
+                    </span>
+                </div>
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-quote">
+            <span>ﷲ</span>
+            العلماءُ ورثةُ الأنبياء
+        </div>
+        <div class="footer-bottom">
+            <small>© <span id="year"></span> سبيل الهدى — صدقة لله</small>
+        </div>
+    </footer>
+
+    <button class="fab fab-top" id="backToTop" aria-label="الأعلى">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+        </svg>
+    </button>
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        // السنة
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        // زر الأعلى
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.pageYOffset > 400);
+            });
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    </script>
+
+</body>
+                  </html>
