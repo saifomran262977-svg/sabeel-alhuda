@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="description" content="مكتبة الأحاديث النبوية الشريفة | سبيل الهدى - أحاديث صحيحة مع المصادر والأسانيد">
+    <meta name="author" content="سيف بن عمران (أبو البراء المصري)">
+
+    <title>السنّة النبوية | سبيل الهدى</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ═══ صفحة الحديث ═══ */
+        .hadith-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 16px 80px;
+        }
+
+        .hadith-header {
+            text-align: center;
+            padding: 30px 0 30px;
+        }
+
+        .hadith-header-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--gold-glow);
+            font-size: 2.5rem;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .hadith-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold-light), var(--emerald-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .hadith-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* البحث */
+        .search-box {
+            position: relative;
+            margin: 0 auto 16px;
+            max-width: 600px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 16px 52px 16px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all var(--transition);
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+        }
+
+        .search-box svg {
+            position: absolute;
+            top: 50%;
+            right: 18px;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--gold);
+            pointer-events: none;
+        }
+
+        /* الفلاتر */
+        .categories {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 0 16px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            max-width: 900px;
+            margin: 0 auto;
+            justify-content: flex-start;
+        }
+
+        .categories::-webkit-scrollbar { display: none; }
+
+        .cat-btn {
+            flex-shrink: 0;
+            padding: 10px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            color: var(--text-secondary);
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+
+        .cat-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .cat-btn.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #000;
+            border-color: transparent;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        /* شريط معلومات */
+        .info-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-bar b {
+            color: var(--gold);
+            font-weight: 800;
+        }
+
+        .fav-filter {
+            cursor: pointer;
+            color: var(--gold);
+            font-weight: 700;
+            transition: all var(--transition);
+        }
+
+        .fav-filter.active {
+            color: var(--emerald-light);
+        }
+
+        /* قائمة الأحاديث */
+        .hadith-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .hadith-card {
+            position: relative;
+            padding: 22px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: hadithEnter 0.5s ease forwards;
+        }
+
+        @keyframes hadithEnter {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hadith-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.06), transparent);
+            transition: left 0.8s ease;
+            pointer-events: none;
+        }
+
+        .hadith-card:hover::before {
+            left: 100%;
+        }
+
+        .hadith-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gold), var(--emerald));
+        }
+
+        .hadith-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hadith-cat-badge {
+            font-size: 0.7rem;
+            padding: 5px 12px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid var(--border-emerald);
+            border-radius: 50px;
+            color: var(--emerald-light);
+            font-weight: 700;
+            font-family: var(--font-heading);
+        }
+
+        .hadith-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hadith-action {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all var(--transition);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .hadith-action:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .hadith-action:active {
+            transform: scale(0.9);
+        }
+
+        .hadith-action.copied {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--emerald);
+            color: var(--emerald-light);
+        }
+
+        .hadith-action.fav-on {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .hadith-text {
+            font-family: var(--font-quran);
+            font-size: 1.08rem;
+            color: var(--text-primary);
+            line-height: 2.1;
+            padding: 16px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .hadith-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.78rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+        }
+
+        .meta-item b {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .isnad-box {
+            grid-column: 1 / -1;
+            padding: 12px 14px;
+            background: var(--bg-glass);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            border-right: 3px solid var(--emerald);
+        }
+
+        .isnad-box b {
+            color: var(--emerald-light);
+        }
+
+        /* حالة عدم وجود نتائج */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state .icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        /* زر المزيد */
+        .load-more {
+            display: block;
+            width: 100%;
+            max-width: 900px;
+            margin: 24px auto 0;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--gold);
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .load-more:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .load-more:active {
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 640px) {
+            .hadith-header h1 { font-size: 1.6rem; }
+            .hadith-text { font-size: 0.98rem; }
+            .hadith-meta { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="grid-overlay"></div>
+    <div class="stars-overlay"></div>
+
+    <header class="topbar" id="topbar">
+        <a href="index.html" class="brand">
+            <div class="logo-icon"><span>ه</span></div>
+            <div class="logo-text">
+                <h1>سبيل الهدى</h1>
+                <p>السنّة النبوية</p>
+            </div>
+        </a>
+        <div class="header-actions">
+            <button class="icon-btn theme-toggle" id="themeToggle" aria-label="تغيير المظهر">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
+            </button>
+            <button class="menu-btn" id="menuBtn" aria-label="القائمة">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+    <nav class="nav-menu" id="navMenu">
+        <div class="nav-header">
+            <div class="nav-logo"><span>ه</span></div>
+            <div class="nav-title">
+                <b>سبيل الهدى</b>
+                <small>منصة إسلامية شاملة</small>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> الرئيسية</a>
+            <a href="quran.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> القرآن الكريم</a>
+            <a href="hadith.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> السنّة النبوية</a>
+            <a href="scholars.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> أهل العلم</a>
+            <a href="news.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/></svg> الأخبار</a>
+            <a href="athkar.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83"/></svg> الأذكار</a>
+        </div>
+    </nav>
+
+    <main class="hadith-page">
+
+        <div class="hadith-header">
+            <div class="hadith-header-icon">📚</div>
+            <h1>السنّة النبوية</h1>
+            <p>مكتبة أحاديث صحيحة مصنفة بالموضوع، مع الرواة والمصادر ودرجات الصحة والأسانيد.</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحث في نص الحديث أو الراوي أو المصدر...">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+        </div>
+
+        <div class="categories" id="categories"></div>
+
+        <div class="info-bar">
+            <span>النتائج: <b id="countDisplay">0</b></span>
+            <span class="fav-filter" id="favFilter">⭐ المفضلة</span>
+        </div>
+
+        <div class="hadith-list" id="hadithList"></div>
+
+        <button class="load-more" id="loadMore" style="display:none;">عرض المزيد ↓</button>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-quote"><span>ﷲ</span> من دلّ على خير فله مثل أجر فاعله</div>
+        <div class="footer-bottom"><small>© <span id="year"></span> سبيل الهدى — صدقة لله</small></div>
+    </footer>
+
+    <button class="fab fab-top" id="backToTop" aria-label="الأعلى">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </button>
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        /* ═══════════════════════════════════════════
+           قاعدة بيانات الأحاديث
+           ═══════════════════════════════════════════
+           لإضافة حديث جديد، أضف كائنًا في أي مكان داخل المصفوفة:
+
+           {
+               cat: "التصنيف",
+               text: "نص الحديث",
+               rawi: "الراوي",
+               source: "المصدر",
+               grade: "درجة الصحة",
+               isnad: "سلسلة الإسناد"
+           }
+           ═══════════════════════════════════════════ */
+
+        const hadithsData = [
+
+        // ═══ العقيدة (10) ═══
+        { cat:"العقيدة", text:"إنَّما الأعمالُ بالنِّيَّاتِ، وإنَّما لكلِّ امرئٍ ما نوى.", rawi:"عمر بن الخطاب", source:"البخاري (1)، مسلم (1907)", grade:"صحيح متفق عليه", isnad:"الحميدي → سفيان → يحيى بن سعيد → محمد بن إبراهيم → علقمة ← عمر" },
+        { cat:"العقيدة", text:"بُنِيَ الإسلامُ على خمسٍ: شهادةِ أنْ لا إلهَ إلا اللهُ، وإقامِ الصلاةِ، وإيتاءِ الزكاةِ، وحجِّ البيتِ، وصومِ رمضان.", rawi:"عبد الله بن عمر", source:"البخاري (8)، مسلم (16)", grade:"صحيح متفق عليه", isnad:"عبيد الله بن موسى → حنظلة → عكرمة ← ابن عمر" },
+        { cat:"العقيدة", text:"الإيمانُ أنْ تؤمنَ باللهِ وملائكتِه وكتبِه ورسلِه واليومِ الآخِرِ، وتؤمنَ بالقدرِ خيرِه وشرِّه.", rawi:"عمر بن الخطاب", source:"مسلم (8)", grade:"صحيح", isnad:"يحيى بن يعمر ← ابن عمر ← جبريل ← النبي ﷺ" },
+        { cat:"العقيدة", text:"الإحسانُ أنْ تعبدَ اللهَ كأنكَ تراه، فإنْ لم تكُنْ تراه فإنه يراك.", rawi:"عمر بن الخطاب", source:"مسلم (8)", grade:"صحيح", isnad:"حديث جبريل الطويل ← عمر" },
+        { cat:"العقيدة", text:"إنَّ اللهَ لا ينظرُ إلى صُوَرِكم وأموالِكم، ولكن ينظرُ إلى قلوبِكم وأعمالِكم.", rawi:"أبو هريرة", source:"مسلم (2564)", grade:"صحيح", isnad:"عمرو بن محمد → أبو معاوية ← أبو هريرة" },
+        { cat:"العقيدة", text:"أحبُّ الأعمالِ إلى اللهِ أدومُها وإنْ قَلَّ.", rawi:"عائشة", source:"البخاري (6464)، مسلم (783)", grade:"صحيح متفق عليه", isnad:"عبدان → شعبة ← عائشة" },
+        { cat:"العقيدة", text:"الطُّهورُ شطرُ الإيمانِ، والحمدُ للهِ تملأُ الميزانَ.", rawi:"أبو مالك الأشعري", source:"مسلم (223)", grade:"صحيح", isnad:"إسحاق → حبان ← أبو مالك" },
+        { cat:"العقيدة", text:"كلمتانِ خفيفتانِ على اللسانِ، ثقيلتانِ في الميزانِ: سبحانَ اللهِ وبحمدِه، سبحانَ اللهِ العظيمِ.", rawi:"أبو هريرة", source:"البخاري (6682)، مسلم (2694)", grade:"صحيح متفق عليه", isnad:"أحمد بن أبي رجاء ← أبو هريرة" },
+        { cat:"العقيدة", text:"ما مِن أحدٍ يشهدُ أنْ لا إلهَ إلا اللهُ وأنَّ محمدًا رسولُ اللهِ، إلا حَرَّمَه اللهُ على النارِ.", rawi:"عبادة بن الصامت", source:"مسلم (32)", grade:"صحيح", isnad:"زهير → عفان ← عبادة" },
+        { cat:"العقيدة", text:"إنَّ اللهَ يُدني المؤمنَ فيضعُ عليه كَنَفَه ويُقرِّرُه بذنوبِه.", rawi:"ابن عمر", source:"البخاري (2441)، مسلم (2768)", grade:"صحيح متفق عليه", isnad:"← ابن عمر" },
+
+        // ═══ الطهارة (8) ═══
+        { cat:"الطهارة", text:"لا يَقبلُ اللهُ صلاةَ أحدِكم إذا أحدَثَ حتى يتوضَّأَ.", rawi:"أبو هريرة", source:"البخاري (6954)، مسلم (225)", grade:"صحيح متفق عليه", isnad:"عبد الله بن يوسف → مالك ← أبو هريرة" },
+        { cat:"الطهارة", text:"مِفتاحُ الصلاةِ الطُّهورُ، وتحريمُها التكبيرُ، وتحليلُها التسليمُ.", rawi:"علي بن أبي طالب", source:"أبو داود (61)، الترمذي (3)", grade:"حسن", isnad:"عثمان بن أبي شيبة → وكيع ← علي" },
+        { cat:"الطهارة", text:"خمسٌ من الفِطرةِ: الختانُ، والاستحدادُ، وتقليمُ الأظفارِ، ونتفُ الإبطِ، وقصُّ الشاربِ.", rawi:"أبو هريرة", source:"البخاري (5889)، مسلم (257)", grade:"صحيح متفق عليه", isnad:"أحمد بن أبي رجاء ← أبو هريرة" },
+        { cat:"الطهارة", text:"إذا توضَّأَ العبدُ المسلمُ، فغسلَ وجهَه، خرجَ من وجههِ كلُّ خطيئةٍ نظرَ إليها بعينِه.", rawi:"أبو هريرة", source:"مسلم (244)", grade:"صحيح", isnad:"أبو بكر → زيد ← أبو هريرة" },
+        { cat:"الطهارة", text:"مَن توضَّأَ فأحسنَ الوضوءَ، خرجتْ خطاياه من جسدِه حتى تخرجَ من تحتِ أظفارِه.", rawi:"عثمان بن عفان", source:"مسلم (245)", grade:"صحيح", isnad:"محمد بن معمر → أبو عاصم ← عثمان" },
+        { cat:"الطهارة", text:"الماءُ طَهورٌ لا يُنجِّسُه شيءٌ.", rawi:"أبو سعيد الخدري", source:"الترمذي (66)", grade:"صحيح", isnad:"محمد بن بشار → مسلم بن إبراهيم ← أبو سعيد" },
+        { cat:"الطهارة", text:"إذا استيقظَ أحدُكم من نومِه فلا يَغمِسْ يدَه في الإناءِ حتى يغسلَها ثلاثًا.", rawi:"أبو هريرة", source:"البخاري (162)، مسلم (278)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الطهارة", text:"لا يبولَنَّ أحدُكم في الماءِ الدائمِ الذي لا يجري ثم يغتسلُ منه.", rawi:"أبو هريرة", source:"البخاري (239)، مسلم (282)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+
+        // ═══ الصلاة (10) ═══
+        { cat:"الصلاة", text:"بينَ الرجلِ والكفرِ تركُ الصلاةِ.", rawi:"جابر", source:"مسلم (82)", grade:"صحيح", isnad:"أبو غسان → وكيع ← جابر" },
+        { cat:"الصلاة", text:"مَن تركَ صلاةَ العصرِ متعمدًا حتى فاتتْ، فقد حَبِطَ عملُه.", rawi:"بريدة", source:"البخاري (553)", grade:"صحيح", isnad:"← بريدة" },
+        { cat:"الصلاة", text:"أقربُ ما يكونُ العبدُ من ربِّه وهو ساجدٌ، فأكثِروا الدعاءَ.", rawi:"أبو هريرة", source:"مسلم (482)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الصلاة", text:"صلاةُ الجماعةِ تفضُلُ صلاةَ الفذِّ بسبعٍ وعشرين درجةً.", rawi:"ابن عمر", source:"البخاري (645)، مسلم (650)", grade:"صحيح متفق عليه", isnad:"← ابن عمر" },
+        { cat:"الصلاة", text:"إذا سَجَدَ العبدُ سجدَ معه سبعةُ آرابٍ: وجهه، وكفاه، وركبتاه، وقدمانِه.", rawi:"ابن عباس", source:"مسلم (490)", grade:"صحيح", isnad:"← ابن عباس" },
+        { cat:"الصلاة", text:"الصلاةُ على وقتِها أحبُّ الأعمالِ إلى اللهِ.", rawi:"ابن مسعود", source:"البخاري (527)", grade:"صحيح", isnad:"← ابن مسعود" },
+        { cat:"الصلاة", text:"سبعةٌ يُظِلُّهم اللهُ في ظلِّه يومَ لا ظلَّ إلا ظلُّه.", rawi:"أبو هريرة", source:"البخاري (660)، مسلم (1031)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الصلاة", text:"مَن صلَّى العِشاءَ في جماعةٍ، كان كقيامِ نصفِ ليلةٍ.", rawi:"عثمان بن عفان", source:"مسلم (656)", grade:"صحيح", isnad:"← عثمان" },
+        { cat:"الصلاة", text:"مَن نسيَ صلاةً فليُصلِّها إذا ذَكَرَها، لا كفارةَ لها إلا ذلك.", rawi:"أنس", source:"البخاري (597)، مسلم (684)", grade:"صحيح متفق عليه", isnad:"← أنس" },
+        { cat:"الصلاة", text:"صلُّوا كما رأيتُموني أُصلِّي.", rawi:"مالك بن الحويرث", source:"البخاري (631)", grade:"صحيح", isnad:"← مالك" },
+
+        // ═══ الزكاة (6) ═══
+        { cat:"الزكاة", text:"ما نَقَصَتْ صدقةٌ من مالٍ، وما زادَ اللهُ عبدًا بعفوٍ إلا عِزًّا.", rawi:"أبو هريرة", source:"مسلم (2588)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الزكاة", text:"مَن تصدَّقَ بعَدْلِ تمرةٍ من كسبٍ طيبٍ، فإنَّ اللهَ يتقبَّلُها بيمينِه ويُربِّيها.", rawi:"أبو هريرة", source:"البخاري (1410)، مسلم (1014)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الزكاة", text:"أفضلُ الصدقةِ أنْ تَصدَّقَ وأنتَ صحيحٌ شحيحٌ.", rawi:"أبو هريرة", source:"البخاري (1419)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الزكاة", text:"الصدقةُ تُطفئُ الخطيئةَ كما يُطفئُ الماءُ النارَ.", rawi:"معاذ", source:"الترمذي (2616)", grade:"حسن", isnad:"← معاذ" },
+        { cat:"الزكاة", text:"اتَّقوا النارَ ولو بشِقِّ تمرةٍ.", rawi:"عدي بن حاتم", source:"البخاري (1417)، مسلم (1016)", grade:"صحيح متفق عليه", isnad:"← عدي" },
+        { cat:"الزكاة", text:"اليدُ العُليا خيرٌ من اليدِ السُّفلى.", rawi:"ابن عمر", source:"البخاري (1429)، مسلم (1033)", grade:"صحيح متفق عليه", isnad:"← ابن عمر" },
+
+        // ═══ الصيام (8) ═══
+        { cat:"الصيام", text:"مَن صامَ رمضانَ إيمانًا واحتسابًا، غُفِرَ له ما تقدَّمَ من ذنبِه.", rawi:"أبو هريرة", source:"البخاري (38)، مسلم (760)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الصيام", text:"قال اللهُ: كلُّ عملِ ابنِ آدمَ له إلا الصيامَ، فإنَّه لي وأنا أجزي به.", rawi:"أبو هريرة", source:"البخاري (1904)، مسلم (1151)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الصيام", text:"للصائمِ فرحتان: فرحةٌ عند فطرِه، وفرحةٌ عند لقاءِ ربِّه.", rawi:"أبو هريرة", source:"مسلم (1151)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الصيام", text:"تَسَحَّروا، فإنَّ في السَّحورِ بركةً.", rawi:"أنس", source:"البخاري (1923)، مسلم (1095)", grade:"صحيح متفق عليه", isnad:"← أنس" },
+        { cat:"الصيام", text:"من لم يَدَعْ قولَ الزورِ والعملَ به، فليسَ للهِ حاجةٌ في أنْ يدَعَ طعامَه وشرابَه.", rawi:"أبو هريرة", source:"البخاري (1903)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الصيام", text:"إنَّ في الجنةِ بابًا يُقالُ له الريانُ، لا يدخلُه إلا الصائمون.", rawi:"سهل بن سعد", source:"البخاري (1896)", grade:"صحيح", isnad:"← سهل" },
+        { cat:"الصيام", text:"مَن صامَ يومًا في سبيلِ اللهِ، بعَّدَ اللهُ وجهَه عن النارِ سبعين خريفًا.", rawi:"أبو سعيد الخدري", source:"البخاري (2840)، مسلم (1153)", grade:"صحيح متفق عليه", isnad:"← أبو سعيد" },
+        { cat:"الصيام", text:"إذا دخلَ رمضانُ، فُتِحَتْ أبوابُ الجنةِ، وغُلِّقَتْ أبوابُ النارِ.", rawi:"أبو هريرة", source:"البخاري (1899)، مسلم (1079)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+
+        // ═══ الحج (5) ═══
+        { cat:"الحج", text:"مَن حجَّ فلم يَرفُثْ ولم يَفسُقْ، رجعَ كيومِ ولدَتْه أمُّه.", rawi:"أبو هريرة", source:"البخاري (1521)، مسلم (1350)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الحج", text:"الحجُّ المبرورُ ليس له جزاءٌ إلا الجنة.", rawi:"أبو هريرة", source:"البخاري (1773)، مسلم (1349)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الحج", text:"العمرةُ إلى العمرةِ كفارةٌ لما بينهما، والحجُّ المبرورُ ليس له جزاءٌ إلا الجنةُ.", rawi:"أبو هريرة", source:"البخاري (1773)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الحج", text:"الحجُّ عرفةُ.", rawi:"عبد الرحمن بن يعمر", source:"أبو داود (1949)، الترمذي (889)", grade:"صحيح", isnad:"← ابن يعمر" },
+        { cat:"الحج", text:"جهادُ الكبيرِ والصغيرِ والضعيفِ والمرأةِ: الحجُّ والعمرةُ.", rawi:"عائشة", source:"النسائي (2626)", grade:"صحيح", isnad:"← عائشة" },
+
+        // ═══ الأخلاق (15) ═══
+        { cat:"الأخلاق", text:"إنَّ الرجلَ لَيُدرِكُ بحُسنِ خُلُقِه درجةَ الصائمِ القائمِ.", rawi:"عائشة", source:"أبو داود (4798)", grade:"صحيح", isnad:"← عائشة" },
+        { cat:"الأخلاق", text:"أثقلُ شيءٍ في ميزانِ المؤمنِ يومَ القيامةِ خُلُقٌ حسنٌ.", rawi:"أبو الدرداء", source:"الترمذي (2002)", grade:"صحيح", isnad:"← أبو الدرداء" },
+        { cat:"الأخلاق", text:"إنَّ اللهَ رفيقٌ يُحبُّ الرِّفقَ في الأمرِ كلِّه.", rawi:"عائشة", source:"البخاري (6927)، مسلم (2165)", grade:"صحيح متفق عليه", isnad:"← عائشة" },
+        { cat:"الأخلاق", text:"مَن لا يَرحَمُ لا يُرحَمُ.", rawi:"أبو هريرة", source:"البخاري (5997)، مسلم (2318)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الأخلاق", text:"الراحمونَ يَرحَمُهم الرحمنُ، ارحَموا مَن في الأرضِ يَرحَمْكم مَن في السماءِ.", rawi:"عبد الله بن عمرو", source:"أبو داود (4941)، الترمذي (1924)", grade:"صحيح", isnad:"← ابن عمرو" },
+        { cat:"الأخلاق", text:"المسلمُ مَن سَلِمَ المسلمونَ من لسانِه ويدِه.", rawi:"عبد الله بن عمرو", source:"البخاري (10)، مسلم (40)", grade:"صحيح متفق عليه", isnad:"← ابن عمرو" },
+        { cat:"الأخلاق", text:"لا يؤمنُ أحدُكم حتى يحبَّ لأخيهِ ما يُحبُّ لنفسِه.", rawi:"أنس", source:"البخاري (13)، مسلم (45)", grade:"صحيح متفق عليه", isnad:"← أنس" },
+        { cat:"الأخلاق", text:"المؤمنُ للمؤمنِ كالبُنيانِ يَشُدُّ بعضُه بعضًا.", rawi:"أبو موسى", source:"البخاري (481)، مسلم (2585)", grade:"صحيح متفق عليه", isnad:"← أبو موسى" },
+        { cat:"الأخلاق", text:"مَن كان يؤمنُ باللهِ واليومِ الآخِرِ، فليَقُلْ خيرًا أو ليَصمُتْ.", rawi:"أبو هريرة", source:"البخاري (6018)، مسلم (47)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الأخلاق", text:"الكلمةُ الطيبةُ صدقةٌ.", rawi:"أبو هريرة", source:"البخاري (2989)، مسلم (1009)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الأخلاق", text:"اتَّقِ اللهَ حيثما كنتَ، وأتبِعِ السيئةَ الحسنةَ تمحُها، وخالِقِ الناسَ بخُلُقٍ حسنٍ.", rawi:"أبو ذر", source:"الترمذي (1987)", grade:"حسن", isnad:"← أبو ذر" },
+        { cat:"الأخلاق", text:"خيرُ الناسِ أنفعُهم للناسِ.", rawi:"جابر", source:"المعجم الأوسط (5787)", grade:"حسن", isnad:"← جابر" },
+        { cat:"الأخلاق", text:"الساعي على الأرملةِ والمسكينِ كالمجاهدِ في سبيلِ اللهِ.", rawi:"أبو هريرة", source:"البخاري (5353)، مسلم (2982)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الأخلاق", text:"لا تَحاسَدوا، ولا تَناجَشوا، ولا تَباغَضوا، ولا تَدابَروا، وكونوا عبادَ اللهِ إخوانًا.", rawi:"أبو هريرة", source:"مسلم (2564)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الأخلاق", text:"لا يدخلُ الجنةَ قاطعُ رحمٍ.", rawi:"جبير بن مطعم", source:"البخاري (5984)، مسلم (2556)", grade:"صحيح متفق عليه", isnad:"← جبير" },
+
+        // ═══ الذكر والدعاء (10) ═══
+        { cat:"الذكر", text:"مَن قال: سبحانَ اللهِ وبحمدِه، في يومٍ مئةَ مرةٍ، حُطَّتْ خطاياه وإنْ كانت مثلَ زبدِ البحرِ.", rawi:"أبو هريرة", source:"البخاري (6405)، مسلم (2691)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الذكر", text:"الدعاءُ هو العبادةُ.", rawi:"النعمان بن بشير", source:"الترمذي (3372)", grade:"صحيح", isnad:"← النعمان" },
+        { cat:"الذكر", text:"ليس شيءٌ أكرمَ على اللهِ من الدعاءِ.", rawi:"أبو هريرة", source:"الترمذي (3370)", grade:"حسن", isnad:"← أبو هريرة" },
+        { cat:"الذكر", text:"مَن لزِمَ الاستغفارَ، جعلَ اللهُ له من كلِّ همٍّ فرجًا، ومن كلِّ ضيقٍ مخرجًا.", rawi:"ابن عباس", source:"أبو داود (1518)", grade:"حسن", isnad:"← ابن عباس" },
+        { cat:"الذكر", text:"سيدُ الاستغفارِ: اللهمَّ أنتَ ربي لا إلهَ إلا أنتَ، خلقتَني وأنا عبدُك.", rawi:"شداد بن أوس", source:"البخاري (6306)", grade:"صحيح", isnad:"← شداد" },
+        { cat:"الذكر", text:"أحبُّ الكلامِ إلى اللهِ أربعٌ: سبحانَ اللهِ، والحمدُ لله، ولا إلهَ إلا الله، واللهُ أكبر.", rawi:"سمرة", source:"مسلم (2137)", grade:"صحيح", isnad:"← سمرة" },
+        { cat:"الذكر", text:"مَن قرأَ آيةَ الكُرسيِّ في دُبُرِ كلِّ صلاةٍ، لم يَمنَعْه من الجنةِ إلا الموتُ.", rawi:"أبو أمامة", source:"المعجم الأوسط (8068)", grade:"صحيح", isnad:"← أبو أمامة" },
+        { cat:"الذكر", text:"مَن قال: لا إلهَ إلا اللهُ وحدَه لا شريكَ له، عشرَ مراتٍ، كان له عِدلُ عشرِ رقابٍ.", rawi:"أبو هريرة", source:"البخاري (6403)، مسلم (2693)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الذكر", text:"مَثَلُ الذي يذكرُ ربَّه والذي لا يذكرُه كمَثَلِ الحيِّ والميتِ.", rawi:"أبو موسى", source:"البخاري (6407)", grade:"صحيح", isnad:"← أبو موسى" },
+        { cat:"الذكر", text:"مَن قال حين يُصبِحُ وحين يُمسي: سبحانَ اللهِ وبحمدِه مئةَ مرةٍ، لم يأتِ أحدٌ بأفضلَ مما جاءَ به.", rawi:"أبو هريرة", source:"مسلم (2692)", grade:"صحيح", isnad:"← أبو هريرة" },
+
+        // ═══ العلم (8) ═══
+        { cat:"العلم", text:"مَن سلكَ طريقًا يطلبُ فيه علمًا، سهَّلَ اللهُ له طريقًا إلى الجنةِ.", rawi:"أبو هريرة", source:"مسلم (2699)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"العلم", text:"مَن يُرِدِ اللهُ به خيرًا يُفَقِّهْهُ في الدينِ.", rawi:"معاوية", source:"البخاري (71)، مسلم (1037)", grade:"صحيح متفق عليه", isnad:"← معاوية" },
+        { cat:"العلم", text:"طلبُ العلمِ فريضةٌ على كلِّ مسلمٍ.", rawi:"أنس", source:"ابن ماجه (224)", grade:"حسن لغيره", isnad:"← أنس" },
+        { cat:"العلم", text:"بلغوا عني ولو آيةً.", rawi:"عبد الله بن عمرو", source:"البخاري (3461)", grade:"صحيح", isnad:"← ابن عمرو" },
+        { cat:"العلم", text:"من دلَّ على خيرٍ، فله مثلُ أجرِ فاعلِه.", rawi:"أبو مسعود", source:"مسلم (1893)", grade:"صحيح", isnad:"← أبو مسعود" },
+        { cat:"العلم", text:"العلماءُ ورثةُ الأنبياءِ.", rawi:"أبو الدرداء", source:"أبو داود (3641)", grade:"حسن", isnad:"← أبو الدرداء" },
+        { cat:"العلم", text:"خيرُكم مَن تعلَّمَ القرآنَ وعلَّمَه.", rawi:"عثمان", source:"البخاري (5027)", grade:"صحيح", isnad:"← عثمان" },
+        { cat:"العلم", text:"اقرَؤوا القرآنَ، فإنه يأتي يومَ القيامةِ شفيعًا لأصحابِه.", rawi:"أبو أمامة", source:"مسلم (804)", grade:"صحيح", isnad:"← أبو أمامة" },
+
+        // ═══ السيرة (8) ═══
+        { cat:"السيرة", text:"أُعطِيتُ خمسًا لم يُعطَهنَّ أحدٌ قبلي: نُصِرتُ بالرُّعبِ مسيرةَ شهرٍ.", rawi:"جابر", source:"البخاري (335)، مسلم (521)", grade:"صحيح متفق عليه", isnad:"← جابر" },
+        { cat:"السيرة", text:"أنا سيدُ ولدِ آدمَ يومَ القيامةِ ولا فخرَ.", rawi:"أبو هريرة", source:"الترمذي (3615)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"السيرة", text:"كان خُلُقُه القرآنَ.", rawi:"عائشة", source:"مسلم (746)", grade:"صحيح", isnad:"← عائشة" },
+        { cat:"السيرة", text:"خيرُكم خيرُكم لأهلِه، وأنا خيرُكم لأهلي.", rawi:"عائشة", source:"الترمذي (3895)", grade:"صحيح", isnad:"← عائشة" },
+        { cat:"السيرة", text:"كان النبيُّ ﷺ أحسنَ الناسِ خَلقًا وخُلُقًا.", rawi:"أنس", source:"البخاري (6203)", grade:"صحيح", isnad:"← أنس" },
+        { cat:"السيرة", text:"كان ﷺ أجودَ الناسِ، وكان أجودَ ما يكونُ في رمضانَ.", rawi:"ابن عباس", source:"البخاري (6)، مسلم (2308)", grade:"صحيح متفق عليه", isnad:"← ابن عباس" },
+        { cat:"السيرة", text:"خيرُ الناسِ قَرني، ثم الذين يلونَهم، ثم الذين يلونَهم.", rawi:"عمران بن حصين", source:"البخاري (2652)، مسلم (2533)", grade:"صحيح متفق عليه", isnad:"← عمران" },
+        { cat:"السيرة", text:"لا تسبُّوا أصحابي، فلو أنَّ أحدَكم أنفقَ مثلَ أُحُدٍ ذهبًا ما بلغَ مُدَّ أحدِهم.", rawi:"أبو سعيد الخدري", source:"البخاري (3673)، مسلم (2540)", grade:"صحيح متفق عليه", isnad:"← أبو سعيد" },
+
+        // ═══ اليوم الآخر (8) ═══
+        { cat:"اليوم الآخر", text:"الدنيا سجنُ المؤمنِ وجنةُ الكافرِ.", rawi:"أبو هريرة", source:"مسلم (2956)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"اليوم الآخر", text:"إنَّ في الجنةِ ما لا عينٌ رأتْ، ولا أذنٌ سمعتْ، ولا خطرَ على قلبِ بشرٍ.", rawi:"أبو هريرة", source:"البخاري (4779)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"اليوم الآخر", text:"يُؤتى بأنعمِ أهلِ الدنيا من أهلِ النارِ، فيُغمَسُ في النارِ غمسةً واحدةً.", rawi:"أنس", source:"مسلم (2807)", grade:"صحيح", isnad:"← أنس" },
+        { cat:"اليوم الآخر", text:"يقولُ اللهُ: يا ابنَ آدمَ، مرضتُ فلم تَعُدْني، جُعتُ فلم تُطعِمني.", rawi:"أبو هريرة", source:"مسلم (2569)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"اليوم الآخر", text:"أولُ ما يُحاسَبُ به العبدُ يومَ القيامةِ: الصلاةُ.", rawi:"أبو هريرة", source:"الترمذي (413)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"اليوم الآخر", text:"مَن خافَ أدلَجَ، ومَن أدلَجَ بلغَ المنزلَ.", rawi:"أبو هريرة", source:"الترمذي (2450)", grade:"حسن", isnad:"← أبو هريرة" },
+        { cat:"اليوم الآخر", text:"اتَّقوا النارَ ولو بشِقِّ تمرةٍ.", rawi:"عدي", source:"البخاري (1417)", grade:"صحيح", isnad:"← عدي" },
+        { cat:"اليوم الآخر", text:"أشدُّ الناسِ عذابًا يومَ القيامةِ مَن يُشَبِّهُ بِخَلقِ اللهِ.", rawi:"ابن عباس", source:"أحمد (3391)", grade:"صحيح", isnad:"← ابن عباس" },
+
+        // ═══ المعاملات (8) ═══
+        { cat:"المعاملات", text:"مَن غَشَّ فليسَ منِّي.", rawi:"أبو هريرة", source:"مسلم (101)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"المعاملات", text:"أدِّ الأمانةَ إلى مَن ائتمنَك، ولا تَخُنْ مَن خانَك.", rawi:"أبو هريرة", source:"أبو داود (3535)", grade:"حسن", isnad:"← أبو هريرة" },
+        { cat:"المعاملات", text:"مَن أخذَ أموالَ الناسِ يُريدُ أداءَها، أدَّى اللهُ عنه.", rawi:"أبو هريرة", source:"البخاري (2387)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"المعاملات", text:"البيعانِ بالخيارِ ما لم يتفرَّقا.", rawi:"ابن عمر", source:"البخاري (2107)", grade:"صحيح", isnad:"← ابن عمر" },
+        { cat:"المعاملات", text:"لعنَ رسولُ اللهِ ﷺ آكلَ الرِّبا وموكِلَه وكاتبَه وشاهدَيه.", rawi:"ابن مسعود", source:"أبو داود (3333)", grade:"صحيح", isnad:"← ابن مسعود" },
+        { cat:"المعاملات", text:"مَن اقتطعَ حقَّ امرئٍ مسلمٍ بيمينِه، حرَّمَ اللهُ عليه الجنةَ.", rawi:"أبو أمامة", source:"مسلم (137)", grade:"صحيح", isnad:"← أبو أمامة" },
+        { cat:"المعاملات", text:"لا تَبِعْ ما ليس عندَك.", rawi:"حكيم بن حزام", source:"الترمذي (1232)", grade:"صحيح", isnad:"← حكيم" },
+        { cat:"المعاملات", text:"الرِّبا اثنانِ وسبعونَ بابًا، أدناها مثلُ إتيانِ الرجلِ أمَّه.", rawi:"أبو هريرة", source:"ابن ماجه (2274)", grade:"حسن", isnad:"← أبو هريرة" },
+
+        // ═══ الأسرة (8) ═══
+        { cat:"الأسرة", text:"استوصوا بالنساءِ خيرًا.", rawi:"أبو هريرة", source:"البخاري (5186)، مسلم (1468)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الأسرة", text:"الرجلُ راعٍ في أهلِه، وهو مسؤولٌ عن رعيَّتِه.", rawi:"ابن عمر", source:"البخاري (7138)", grade:"صحيح", isnad:"← ابن عمر" },
+        { cat:"الأسرة", text:"مَن كان له ثلاثُ بناتٍ فصبرَ عليهنَّ، كنَّ له حِجابًا من النارِ.", rawi:"عقبة", source:"ابن حبان (447)", grade:"صحيح", isnad:"← عقبة" },
+        { cat:"الأسرة", text:"ليس منَّا مَن لم يَرحَمْ صغيرَنا ولم يُوقِّرْ كبيرَنا.", rawi:"أنس", source:"الترمذي (1919)", grade:"صحيح", isnad:"← أنس" },
+        { cat:"الأسرة", text:"مَن سَرَّه أنْ يُبسَطَ له في رزقِه ويُنسأَ له في أثرِه، فليَصِلْ رحمَه.", rawi:"أنس", source:"البخاري (5985)", grade:"صحيح", isnad:"← أنس" },
+        { cat:"الأسرة", text:"الجنةُ تحتَ أقدامِ الأمهاتِ.", rawi:"معاوية بن جاهمة", source:"النسائي (3104)", grade:"حسن", isnad:"← معاوية" },
+        { cat:"الأسرة", text:"مَن أحقُّ الناسِ بحُسنِ صحابتي؟ قالت: أمك، ثم أمك، ثم أمك، ثم أبوك.", rawi:"أبو هريرة", source:"البخاري (5971)، مسلم (2548)", grade:"صحيح متفق عليه", isnad:"← أبو هريرة" },
+        { cat:"الأسرة", text:"أكملُ المؤمنينَ إيمانًا أحسنُهم خُلُقًا، وخيارُكم خيارُكم لنسائِهم.", rawi:"أبو هريرة", source:"الترمذي (1162)", grade:"صحيح", isnad:"← أبو هريرة" },
+
+           // ═══ الطعام (6) ═══
+        { cat:"الطعام", text:"ما ملأَ ابنُ آدمَ وعاءً شرًّا من بطنِه، بحسبِ ابنِ آدمَ لقيماتٌ يُقِمْنَ صُلبَه.", rawi:"ابن عمر", source:"الترمذي (2380)", grade:"حسن", isnad:"← ابن عمر" },
+        { cat:"الطعام", text:"إذا أكلَ أحدُكم فليذكُرِ اسمَ اللهِ.", rawi:"عائشة", source:"الترمذي (1858)", grade:"صحيح", isnad:"← عائشة" },
+        { cat:"الطعام", text:"طعامُ الواحدِ يكفي الاثنينِ، وطعامُ الاثنينِ يكفي الأربعةَ.", rawi:"جابر", source:"مسلم (2058)", grade:"صحيح", isnad:"← جابر" },
+        { cat:"الطعام", text:"إنَّ الشيطانَ يَستحِلُّ الطعامَ إذا لم يُذكَرِ اسمُ اللهِ عليه.", rawi:"حذيفة", source:"مسلم (2017)", grade:"صحيح", isnad:"← حذيفة" },
+        { cat:"الطعام", text:"إذا أكلَ أحدُكم فليأكُلْ بيمينِه، وإذا شربَ فليشرَبْ بيمينِه.", rawi:"عمر بن أبي سلمة", source:"البخاري (5376)", grade:"صحيح", isnad:"← عمر" },
+        { cat:"الطعام", text:"لا تَشربوا قائمًا، فإنه يُورِثُ الداءَ.", rawi:"أبو هريرة", source:"الترمذي (1881)", grade:"حسن", isnad:"← أبو هريرة" },
+
+        // ═══ اللباس (5) ═══
+        { cat:"اللباس", text:"لا ينظرُ اللهُ إلى مَن جرَّ ثوبَه خُيَلاءَ.", rawi:"ابن عمر", source:"البخاري (5788)، مسلم (2085)", grade:"صحيح متفق عليه", isnad:"← ابن عمر" },
+        { cat:"اللباس", text:"كلوا واشربوا والبَسوا وتصدَّقوا في غير سَرَفٍ ولا مخيلةٍ.", rawi:"ابن عباس", source:"البخاري (5783)", grade:"صحيح", isnad:"← ابن عباس" },
+        { cat:"اللباس", text:"مَن لبِسَ الحريرَ في الدنيا، لم يَلبَسْه في الآخرةِ.", rawi:"عمر", source:"البخاري (5835)", grade:"صحيح", isnad:"← عمر" },
+        { cat:"اللباس", text:"لعنَ رسولُ اللهِ ﷺ المتشبِّهينَ من الرجالِ بالنساءِ والمتشبِّهاتِ من النساءِ بالرجالِ.", rawi:"ابن عباس", source:"البخاري (5885)", grade:"صحيح", isnad:"← ابن عباس" },
+        { cat:"اللباس", text:"مَن تركَ اللباسَ تواضُعًا للهِ، وهو يقدِرُ عليه، دعاه اللهُ يومَ القيامةِ على رؤوسِ الخلائقِ.", rawi:"معاذ", source:"الترمذي (2481)", grade:"حسن", isnad:"← معاذ" },
+
+        // ═══ الطب (5) ═══
+        { cat:"الطب", text:"ما أنزلَ اللهُ داءً إلا أنزلَ له دواءً.", rawi:"أبو هريرة", source:"البخاري (5678)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الطب", text:"تداوَوا، فإنَّ اللهَ لم يضَعْ داءً إلا وضَعَ له شفاءً.", rawi:"أبو الدرداء", source:"أبو داود (3855)", grade:"صحيح", isnad:"← أبو الدرداء" },
+        { cat:"الطب", text:"الحُمَّى من فَيحِ جهنَّمَ، فأبرِدُوها بالماءِ.", rawi:"ابن عمر", source:"البخاري (3261)، مسلم (2209)", grade:"صحيح متفق عليه", isnad:"← ابن عمر" },
+        { cat:"الطب", text:"في الحَبَّةِ السوداءِ شفاءٌ من كلِّ داءٍ إلا السامَ.", rawi:"أبو هريرة", source:"البخاري (5688)", grade:"صحيح", isnad:"← أبو هريرة" },
+        { cat:"الطب", text:"لِكلِّ داءٍ دواءٌ، فإذا أصابَ الدواءُ الداءَ برأَ بإذنِ اللهِ.", rawi:"جابر", source:"مسلم (2204)", grade:"صحيح", isnad:"← جابر" },
+
+        // ═══ فضائل الصحابة (5) ═══
+        { cat:"فضائل الصحابة", text:"خيرُ أمتي قَرني، ثم الذين يلونَهم.", rawi:"عمران بن حصين", source:"البخاري (2652)", grade:"صحيح", isnad:"← عمران" },
+        { cat:"فضائل الصحابة", text:"أبو بكرٍ خيرُ الناسِ بعدَ النبيِّ ﷺ.", rawi:"أبو سعيد الخدري", source:"ابن ماجه (106)", grade:"صحيح", isnad:"← أبو سعيد" },
+        { cat:"فضائل الصحابة", text:"لو كنتُ مُتَّخِذًا خليلًا لاتَّخذتُ ابنَ أبي قحافةَ خليلًا.", rawi:"ابن مسعود", source:"مسلم (2383)", grade:"صحيح", isnad:"← ابن مسعود" },
+        { cat:"فضائل الصحابة", text:"فاطمةُ سيدةُ نساءِ العالمينَ.", rawi:"عائشة", source:"الحاكم (4734)", grade:"صحيح", isnad:"← عائشة" },
+        { cat:"فضائل الصحابة", text:"حسَنٌ وحسينٌ سيدا شبابِ أهلِ الجنةِ.", rawi:"ابن عمر", source:"الترمذي (3768)", grade:"صحيح", isnad:"← ابن عمر" }
+
+        ];
+
+        /* ═══════════════════════════════════════════
+           المحرك
+           ═══════════════════════════════════════════ */
+
+        const listEl = document.getElementById('hadithList');
+        const searchInput = document.getElementById('searchInput');
+        const categoriesEl = document.getElementById('categories');
+        const countDisplay = document.getElementById('countDisplay');
+        const favFilter = document.getElementById('favFilter');
+        const loadMoreBtn = document.getElementById('loadMore');
+
+        const LIKES_KEY = 'sabeel_hadith_favs';
+        let currentCat = 'الكل';
+        let currentSearch = '';
+        let showFavOnly = false;
+        let visibleCount = 20;
+
+        function getFavs() {
+            try { return JSON.parse(localStorage.getItem(LIKES_KEY) || '[]'); }
+            catch(e) { return []; }
+        }
+        function saveFavs(arr) {
+            try { localStorage.setItem(LIKES_KEY, JSON.stringify(arr)); } catch(e) {}
+        }
+
+        // بناء التصنيفات
+        const allCats = ['الكل', ...new Set(hadithsData.map(h => h.cat))];
+        allCats.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'cat-btn' + (cat === 'الكل' ? ' active' : '');
+            btn.textContent = cat;
+            btn.dataset.cat = cat;
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCat = cat;
+                visibleCount = 20;
+                render();
+            });
+            categoriesEl.appendChild(btn);
+        });
+
+        // فلتر المفضلة
+        favFilter.addEventListener('click', () => {
+            showFavOnly = !showFavOnly;
+            favFilter.classList.toggle('active', showFavOnly);
+            favFilter.textContent = showFavOnly ? '⭐ إظهار الكل' : '⭐ المفضلة';
+            visibleCount = 20;
+            render();
+        });
+
+        // عرض
+        function render() {
+            const favs = getFavs();
+            const filtered = hadithsData.filter(h => {
+                const matchCat = currentCat === 'الكل' || h.cat === currentCat;
+                const search = currentSearch;
+                const matchSearch = search === '' ||
+                    h.text.includes(search) ||
+                    h.rawi.includes(search) ||
+                    h.source.includes(search) ||
+                    h.cat.includes(search) ||
+                    h.isnad.includes(search);
+                const matchFav = !showFavOnly || favs.includes(h.text);
+                return matchCat && matchSearch && matchFav;
+            });
+
+            countDisplay.textContent = filtered.length;
+            listEl.innerHTML = '';
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔍</div>
+                        <p>لا توجد نتائج مطابقة.</p>
+                    </div>
+                `;
+                loadMoreBtn.style.display = 'none';
+                return;
+            }
+
+            const toShow = filtered.slice(0, visibleCount);
+            toShow.forEach((h, i) => {
+                const isFav = favs.includes(h.text);
+                const card = document.createElement('div');
+                card.className = 'hadith-card';
+                card.style.animationDelay = Math.min(i * 0.02, 0.4) + 's';
+
+                card.innerHTML = `
+                    <div class="hadith-header-row">
+                        <span class="hadith-cat-badge">${h.cat}</span>
+                        <div class="hadith-actions">
+                            <button class="hadith-action copy-btn" title="نسخ">📋</button>
+                            <button class="hadith-action fav-btn ${isFav ? 'fav-on' : ''}" title="مفضلة">${isFav ? '⭐' : '☆'}</button>
+                        </div>
+                    </div>
+                    <p class="hadith-text">«${h.text}»</p>
+                    <div class="hadith-meta">
+                        <div class="meta-item">🎙️ <b>الراوي:</b> ${h.rawi}</div>
+                        <div class="meta-item">📚 <b>المصدر:</b> ${h.source}</div>
+                        <div class="meta-item">✔️ <b>الدرجة:</b> ${h.grade}</div>
+                        <div class="isnad-box"><b>الإسناد:</b> ${h.isnad}</div>
+                    </div>
+                `;
+
+                card.querySelector('.copy-btn').addEventListener('click', (e) => {
+                    const btn = e.currentTarget;
+                    const text = `«${h.text}»\n\nالراوي: ${h.rawi}\nالمصدر: ${h.source}\nالدرجة: ${h.grade}\nالإسناد: ${h.isnad}\n\n— سبيل الهدى`;
+                    navigator.clipboard.writeText(text).then(() => {
+                        btn.textContent = '✓';
+                        btn.classList.add('copied');
+                        setTimeout(() => { btn.textContent = '📋'; btn.classList.remove('copied'); }, 1500);
+                    });
+                });
+
+                card.querySelector('.fav-btn').addEventListener('click', (e) => {
+                    const btn = e.currentTarget;
+                    let favs2 = getFavs();
+                    if (favs2.includes(h.text)) {
+                        favs2 = favs2.filter(t => t !== h.text);
+                        btn.textContent = '☆';
+                        btn.classList.remove('fav-on');
+                    } else {
+                        favs2.push(h.text);
+                        btn.textContent = '⭐';
+                        btn.classList.add('fav-on');
+                    }
+                    saveFavs(favs2);
+                });
+
+                listEl.appendChild(card);
+            });
+
+            if (filtered.length > visibleCount) {
+                loadMoreBtn.style.display = 'block';
+                loadMoreBtn.textContent = `عرض المزيد (${filtered.length - visibleCount} متبقي) ↓`;
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        loadMoreBtn.addEventListener('click', () => {
+            visibleCount += 20;
+            render();
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.trim();
+            visibleCount = 20;
+            render();
+        });
+
+        // السنة
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        // زر الأعلى
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.pageYOffset > 400);
+            });
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // عرض أولي
+        render();
+    </script>
+
+</body>
+</html>
