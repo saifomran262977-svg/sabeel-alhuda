@@ -214,7 +214,7 @@ const siteConfig = {
         enablePWA: true,
         enableAnimations: true,
         sessionDuration: 60,
-        loginPassword: "sabeel2026"
+        loginPassword: "11"
     },
 
     // ═══════════════════════════════════════════
