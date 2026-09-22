@@ -1839,3 +1839,157 @@ main,
         white-space: nowrap !important;
     }
 }
+/* ═══════════════════════════════════════════════════════════════
+   حل نهائي لمشكلة اختفاء المحتوى أثناء اللمس والتمرير على الجوال
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px), (hover: none), (pointer: coarse) {
+
+    /* 1. تعطيل كل الحركات */
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+        transition: none !important;
+        transition-duration: 0s !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        will-change: auto !important;
+    }
+
+    /* 2. تعطيل كل التأثيرات الزجاجية والضبابية */
+    *,
+    *::before,
+    *::after {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+
+    /* 3. تبسيط الظلال */
+    .hadith-card,
+    .athkar-card,
+    .news-card,
+    .scholar-card,
+    .card-item,
+    .tool-item,
+    .info-section,
+    .about-section,
+    .content-section,
+    .author-card,
+    .book-card,
+    .brother-card,
+    .contact-card,
+    .hero-stats,
+    .counter-box,
+    .quote-section,
+    .search-box input {
+        box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        background: #0f1524 !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    body.light-mode .hadith-card,
+    body.light-mode .athkar-card,
+    body.light-mode .news-card,
+    body.light-mode .scholar-card,
+    body.light-mode .card-item,
+    body.light-mode .tool-item,
+    body.light-mode .info-section,
+    body.light-mode .about-section,
+    body.light-mode .content-section,
+    body.light-mode .author-card,
+    body.light-mode .book-card,
+    body.light-mode .brother-card,
+    body.light-mode .contact-card,
+    body.light-mode .hero-stats,
+    body.light-mode .counter-box,
+    body.light-mode .quote-section,
+    body.light-mode .search-box input {
+        background: #ffffff !important;
+    }
+
+    /* 4. ضمان ظهور كل البطاقات */
+    .hadith-card,
+    .athkar-card,
+    .news-card,
+    .scholar-card,
+    .card-item,
+    .tool-item {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+
+    /* 5. تعطيل العناصر الثقيلة في الخلفية */
+    .ambient,
+    .ambient-1,
+    .ambient-2,
+    .ambient-3,
+    .ambient-4,
+    .grid-overlay,
+    .stars-overlay,
+    .scroll-progress {
+        display: none !important;
+    }
+
+    /* 6. تبسيط الترويسة */
+    .topbar {
+        background: #0a0e1a !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    body.light-mode .topbar {
+        background: #f8fafc !important;
+    }
+
+    /* 7. تبسيط القائمة الجانبية */
+    .nav-menu {
+        background: #0f1524 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    body.light-mode .nav-menu {
+        background: #f1f5f9 !important;
+    }
+
+    /* 8. ضمان الأداء العالي */
+    html, body {
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* 9. تعطيل التمرير السلس */
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    /* 10. تحسين أداء التمرير */
+    .hadith-list,
+    .athkar-list,
+    .news-list,
+    main {
+        contain: layout style !important;
+    }
+}
+
+/* 11. إصلاح إضافي: تحسين تمرير القوائم */
+.hadith-list,
+.athkar-list,
+.news-list,
+.scholars-grid,
+.cards-grid,
+.tools-grid {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
