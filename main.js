@@ -409,5 +409,18 @@ if (document.readyState === 'loading') {
     console.log('%c🕌 سبيل الهدى', 'color: #d4af37; font-size: 20px; font-weight: bold;');
     console.log('%cمنصة إسلامية شاملة', 'color: #10b981; font-size: 14px;');
     console.log('%cنسأل الله الإخلاص والقبول', 'color: #94a3b8; font-size: 12px;');
+// ═══════════════════════════════════════════
+// حماية الصفحات (تحويل لصفحة الدخول)
+// ═══════════════════════════════════════════
+var protectedPages = []; // اتركها فارغة الآن، أو أضف صفحات:
+// مثال: protectedPages = ['admin.html', 'dashboard.html'];
 
+var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+var isProtected = protectedPages.some(function(p) {
+    return currentPage.indexOf(p) !== -1;
+});
+
+if (isProtected && window.SabeelAuth && !window.SabeelAuth.isLoggedIn()) {
+    window.location.href = 'login.html';
+}
 });
