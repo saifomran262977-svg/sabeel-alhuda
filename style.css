@@ -2181,14 +2181,3 @@ img, video, iframe, svg {
         max-width: 100% !important;
     }
 }
-/* منع تمرير الصفحة عند فتح القائمة */
-body:has(.nav-menu.active) {
-    overflow: hidden !important;
-    position: fixed !important;
-    width: 100% !important;
-    height: 100vh !important;
-}
-
-html:has(.nav-menu.active) {
-    overflow: hidden !important;
-}
