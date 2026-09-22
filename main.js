@@ -10,22 +10,38 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ═══════════════════════════════════════════
-    // 1. إخفاء شاشة التحميل
-    // ═══════════════════════════════════════════
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                preloader.classList.add('hidden');
-                setTimeout(() => {
-                    if (preloader.parentNode) {
-                        preloader.parentNode.removeChild(preloader);
-                    }
-                }, 800);
-            }, 400);
-        });
+   // ═══════════════════════════════════════════
+// 1. إخفاء شاشة التحميل (محسّن)
+// ═══════════════════════════════════════════
+const preloader = document.getElementById('preloader');
+
+function hidePreloader() {
+    if (preloader && preloader.parentNode) {
+        preloader.classList.add('hidden');
+        setTimeout(() => {
+            if (preloader.parentNode) {
+                preloader.parentNode.removeChild(preloader);
+            }
+        }, 600);
     }
+}
+
+// إخفاء فوري بعد 1.2 ثانية (حماية قصوى)
+setTimeout(hidePreloader, 1200);
+
+// محاولة عادية عند اكتمال التحميل
+window.addEventListener('load', () => {
+    setTimeout(hidePreloader, 300);
+});
+
+// حماية إضافية: DOMContentLoaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(hidePreloader, 800);
+    });
+} else {
+    setTimeout(hidePreloader, 500);
+}
 
     // ═══════════════════════════════════════════
     // 2. شريط تقدم التمرير
