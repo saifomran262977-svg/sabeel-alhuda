@@ -1,10 +1,7 @@
 /**
  * ═══════════════════════════════════════════════════════════════
  * سبيل الهدى | Sabeel Al-Huda
- * main.js - الحل النهائي
- * ═══════════════════════════════════════════════════════════════
- * هذا الملف يُصلح كل مشاكل التمرير والقائمة تلقائياً.
- * لا يحتاج أي تعديل على ملفات أخرى.
+ * main.js - حل نهائي: إزالة Service Worker والكاش
  * ═══════════════════════════════════════════════════════════════
  */
 
@@ -12,28 +9,74 @@
     'use strict';
 
     // ═══════════════════════════════════════════
-    // 1. إلغاء أي قيود على التمرير فوراً
+    // 1. إلغاء Service Worker + مسح الكاش
+    // ═══════════════════════════════════════════
+    var CLEAN_FLAG = 'sabeel_cleaned_v3';
+
+    if (!localStorage.getItem(CLEAN_FLAG)) {
+        console.log('🧹 بدء التنظيف...');
+
+        var cleanupDone = false;
+
+        function finishCleanup() {
+            if (cleanupDone) return;
+            cleanupDone = true;
+            localStorage.setItem(CLEAN_FLAG, 'true');
+            console.log('✅ تم التنظيف، إعادة تحميل...');
+            window.location.reload(true);
+        }
+
+        // 1. إلغاء كل Service Workers
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+                var promises = regs.map(function(reg) {
+                    console.log('🗑️ إلغاء SW:', reg.scope);
+                    return reg.unregister();
+                });
+                return Promise.all(promises);
+            }).then(function() {
+                // 2. مسح كل الكاش
+                if ('caches' in window) {
+                    return caches.keys().then(function(names) {
+                        return Promise.all(names.map(function(name) {
+                            console.log('🗑️ حذف كاش:', name);
+                            return caches.delete(name);
+                        }));
+                    });
+                }
+            }).then(finishCleanup).catch(finishCleanup);
+        } else {
+            finishCleanup();
+        }
+
+        // حماية: بعد 2 ثانية، أكمل حتى لو تعطل شيء
+        setTimeout(finishCleanup, 2000);
+
+        // إيقاف التنفيذ مؤقتًا حتى انتهاء التنظيف
+        return;
+    }
+
+    // ═══════════════════════════════════════════
+    // 2. إلغاء قيود التمرير
     // ═══════════════════════════════════════════
     function unlockScroll() {
-        document.body.style.overflow = 'auto';
-        document.body.style.overflowX = 'hidden';
-        document.body.style.overflowY = 'auto';
-        document.body.style.position = 'static';
-        document.body.style.height = 'auto';
-        document.body.style.width = 'auto';
-        document.documentElement.style.overflow = 'auto';
-        document.documentElement.style.overflowX = 'hidden';
-        document.documentElement.style.overflowY = 'auto';
-        document.documentElement.style.height = 'auto';
+        document.body.style.overflow = '';
+        document.body.style.overflowX = '';
+        document.body.style.overflowY = '';
+        document.body.style.position = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflowX = '';
+        document.documentElement.style.overflowY = '';
+        document.documentElement.style.height = '';
         document.body.classList.remove('no-scroll', 'menu-open');
         document.documentElement.classList.remove('no-scroll', 'menu-open');
     }
 
-    // تنفيذ فوري
     unlockScroll();
 
     // ═══════════════════════════════════════════
-    // 2. إخفاء شاشة التحميل
+    // 3. إخفاء شاشة التحميل
     // ═══════════════════════════════════════════
     function hidePreloader() {
         var p = document.getElementById('preloader');
@@ -47,24 +90,14 @@
         }
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            unlockScroll();
-            setTimeout(hidePreloader, 800);
-        });
-    } else {
-        unlockScroll();
-        setTimeout(hidePreloader, 800);
-    }
-
-    setTimeout(hidePreloader, 1500);
+    setTimeout(hidePreloader, 1000);
     window.addEventListener('load', function() {
         unlockScroll();
         setTimeout(hidePreloader, 300);
     });
 
     // ═══════════════════════════════════════════
-    // 3. القائمة الجانبية
+    // 4. القائمة الجانبية
     // ═══════════════════════════════════════════
     function initMenu() {
         var menuBtn = document.getElementById('menuBtn');
@@ -95,22 +128,15 @@
             }
         };
 
-        if (navOverlay) {
-            navOverlay.onclick = closeMenu;
-        }
+        if (navOverlay) navOverlay.onclick = closeMenu;
 
         navMenu.querySelectorAll('a').forEach(function(link) {
             link.onclick = closeMenu;
         });
-
-        // إغلاق بزر Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeMenu();
-        });
     }
 
     // ═══════════════════════════════════════════
-    // 4. باقي الميزات
+    // 5. الميزات الأخرى
     // ═══════════════════════════════════════════
     function initFeatures() {
         // السنة
@@ -176,18 +202,10 @@
                 }
             }
         }
-
-        // معلومات المنصة
-        if (typeof siteConfig !== 'undefined' && siteConfig.site) {
-            var bt = document.querySelector('.logo-text h1');
-            if (bt && siteConfig.site.name) bt.textContent = siteConfig.site.name;
-            var bs = document.querySelector('.logo-text p');
-            if (bs && siteConfig.site.tagline) bs.textContent = siteConfig.site.tagline;
-        }
     }
 
     // ═══════════════════════════════════════════
-    // 5. التشغيل
+    // 6. التشغيل
     // ═══════════════════════════════════════════
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
@@ -198,11 +216,5 @@
         initMenu();
         initFeatures();
     }
-
-    // فك التمرير عند أي تغيير في الصفحة
-    window.addEventListener('pageshow', unlockScroll);
-    window.addEventListener('focus', function() {
-        setTimeout(unlockScroll, 100);
-    });
 
 })();
