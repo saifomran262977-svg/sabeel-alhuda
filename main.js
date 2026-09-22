@@ -81,7 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (navOverlay) navOverlay.classList.remove('active');
             };
         });
-    }
+}
+    
 
     // ═══════════════════════════════════════════
     // 4. زر تغيير المظهر
