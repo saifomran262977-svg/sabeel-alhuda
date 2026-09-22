@@ -2181,3 +2181,11 @@ img, video, iframe, svg {
         max-width: 100% !important;
     }
 }
+/* تحسين تمرير القائمة الجانبية */
+.nav-menu {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    touch-action: pan-y !important;
+}
