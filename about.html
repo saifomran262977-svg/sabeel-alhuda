@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="description" content="عن منصة سبيل الهدى — منصة إسلامية شاملة خدمية ودعوية">
+    <meta name="author" content="سيف بن عمران (أبو البراء المصري)">
+
+    <title>عن المنصة | سبيل الهدى</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .about-page {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 20px 16px 80px;
+        }
+
+        .about-hero {
+            text-align: center;
+            padding: 30px 16px 40px;
+            position: relative;
+        }
+
+        .about-hero-icon {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            box-shadow:
+                0 0 60px var(--gold-glow),
+                0 0 0 8px rgba(212, 175, 55, 0.1),
+                inset 0 3px 8px rgba(255, 255, 255, 0.2);
+            font-size: 3rem;
+            position: relative;
+            animation: heroFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .about-hero-icon::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border: 1px dashed rgba(212, 175, 55, 0.4);
+            border-radius: 50%;
+            animation: rotateBorder 20s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            to { transform: rotate(360deg); }
+        }
+
+        .about-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold-light), var(--emerald-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .about-hero .subtitle {
+            font-family: var(--font-quran);
+            font-size: 1.15rem;
+            color: var(--emerald-light);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .about-hero .verse {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            font-family: var(--font-quran);
+            font-size: 1rem;
+            color: var(--gold);
+            line-height: 1.9;
+            max-width: 500px;
+        }
+
+        /* قسم المحتوى */
+        .about-section {
+            margin-bottom: 28px;
+            padding: 28px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gold), var(--emerald));
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .section-title .ic {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .section-title h2 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .section-text {
+            font-size: 0.98rem;
+            color: var(--text-secondary);
+            line-height: 2.1;
+            text-align: justify;
+        }
+
+        .section-text p {
+            margin-bottom: 14px;
+        }
+
+        .section-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-text b {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* المميزات */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .feature-item {
+            padding: 16px 14px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            border-right: 3px solid var(--emerald);
+            transition: all var(--transition);
+        }
+
+        .feature-item:hover {
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateX(-4px);
+        }
+
+        .feature-item .feat-icon {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+        }
+
+        .feature-item b {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: var(--emerald-light);
+            margin-bottom: 4px;
+        }
+
+        .feature-item span {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* بطاقة الصانع */
+        .author-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 22px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(16, 185, 129, 0.04));
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            margin-top: 16px;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            box-shadow: 0 0 30px var(--gold-glow);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .author-avatar::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border: 1px dashed rgba(212, 175, 55, 0.5);
+            border-radius: 50%;
+        }
+
+        .author-avatar span {
+            font-family: var(--font-quran);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .author-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .author-info .name {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+
+        .author-info .nick {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .author-info .whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #fff;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-decoration: none;
+            transition: all var(--transition);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .author-info .whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .author-info .whatsapp svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* دعاء ختامي */
+        .dua-block {
+            text-align: center;
+            padding: 30px 24px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(16, 185, 129, 0.04));
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            font-family: var(--font-quran);
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            line-height: 2.2;
+            margin-top: 20px;
+        }
+
+        .dua-block .dua-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .dua-block .dua-by {
+            display: block;
+            margin-top: 16px;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* اقتباس قرآني */
+        .verse-block {
+            text-align: center;
+            padding: 24px 20px;
+            background: var(--bg-glass);
+            border: 1px dashed var(--border-gold);
+            border-radius: var(--radius-md);
+            font-family: var(--font-quran);
+            font-size: 1.05rem;
+            color: var(--gold);
+            line-height: 2.2;
+            margin-top: 20px;
+        }
+
+        .verse-block .verse-ref {
+            display: block;
+            margin-top: 10px;
+            font-family: var(--font-heading);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .about-hero h1 {
+                font-size: 1.65rem;
+            }
+            .about-hero-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.4rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .author-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .about-section {
+                padding: 22px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <div class="ambient ambient-1"></div>
+    <div class="ambient ambient-2"></div>
+    <div class="grid-overlay"></div>
+    <div class="stars-overlay"></div>
+
+    <header class="topbar" id="topbar">
+        <a href="index.html" class="brand">
+            <div class="logo-icon"><span>ه</span></div>
+            <div class="logo-text">
+                <h1>سبيل الهدى</h1>
+                <p>عن المنصة</p>
+            </div>
+        </a>
+        <div class="header-actions">
+            <a href="index.html" class="icon-btn" aria-label="رجوع" style="text-decoration:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                </svg>
+            </a>
+            <button class="menu-btn" id="menuBtn" aria-label="القائمة">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+    <nav class="nav-menu" id="navMenu">
+        <div class="nav-header">
+            <div class="nav-logo"><span>ه</span></div>
+            <div class="nav-title">
+                <b>سبيل الهدى</b>
+                <small>منصة إسلامية شاملة</small>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> الرئيسية</a>
+            <a href="quran.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> القرآن الكريم</a>
+            <a href="hadith.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> السنّة النبوية</a>
+            <a href="scholars.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> أهل العلم</a>
+            <a href="news.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Z"/></svg> الأخبار</a>
+            <a href="athkar.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83"/></svg> الأذكار</a>
+        </div>
+        <div class="nav-footer">
+            <p>﴿ وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ ﴾</p>
+        </div>
+    </nav>
+
+    <main class="about-page">
+
+        <!-- الترويسة -->
+        <div class="about-hero">
+            <div class="about-hero-icon">📖</div>
+            <h1>عن منصة سبيل الهدى</h1>
+            <p class="subtitle">منصة إسلامية شاملة — خدمية ودعوية</p>
+            <div class="verse">
+                ﴿ وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ وَهُوَ فِي الْآخِرَةِ مِنَ الْخَاسِرِينَ ﴾
+            </div>
+        </div>
+
+        <!-- عن المنصة -->
+        <div class="about-section">
+            <div class="section-title">
+                <div class="ic">🎯</div>
+                <h2>عن المنصة</h2>
+            </div>
+            <div class="section-text">
+                <p>
+                    <b>سبيل الهدى</b> منصة إسلامية شاملة، تهدف إلى تقديم محتوى إسلامي منظّم وموثوق في مكان واحد، بعيدًا عن التشتت والفوضى.
+                </p>
+                <p>
+                    تجمع المنصة بين <b>العلم الشرعي الرصين</b>، و<b>الأدوات العملية اليومية</b>، بتصميم فخم وتجربة سلسة، لتكون رفيقًا للمسلم في يومه.
+                </p>
+                <p>
+                    نسأل الله أن يجعل هذا العمل <b>خالصًا لوجهه الكريم</b>، وأن ينفع به المسلمين في كل مكان.
+                </p>
+            </div>
+        </div>
+
+        <!-- ماذا تقدم -->
+        <div class="about-section">
+            <div class="section-title">
+                <div class="ic">✨</div>
+                <h2>ماذا تقدم المنصة</h2>
+            </div>
+            <div class="section-text">
+                <p>تقدم المنصة أربعة أقسام رئيسية:</p>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feat-icon">📖</div>
+                        <b>القرآن الكريم</b>
+                        <span>١١٤ سورة كاملة بالخط العثماني مع التفسير والتلاوة</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feat-icon">📚</div>
+                        <b>السنّة النبوية</b>
+                        <span>مكتبة أحاديث صحيحة مع الأسانيد ودرجات الصحة</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feat-icon">👨‍🏫</div>
+                        <b>أهل العلم</b>
+                        <span>سير أعلام الأمة: حياتهم، علمهم، ومؤلفاتهم</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feat-icon">📿</div>
+                        <b>الأذكار والأدعية</b>
+                        <span>أذكار الصباح والمساء مع عدّاد إلكتروني</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- رسالة -->
+        <div class="about-section">
+            <div class="section-title">
+                <div class="ic">💬</div>
+                <h2>رسالتنا</h2>
+            </div>
+            <div class="section-text">
+                <p>
+                    نؤمن أن <b>العلمَ نور</b>، و<b>الجهلَ ظلام</b>. ونؤمن أن كل مسلم يحتاج إلى مصدر موثوق يرجع إليه في دينه، بلا تشتت ولا تعقيد.
+                </p>
+                <p>
+                    منصتنا ليست تجارية، ولا نبتغي منها رياءً ولا سمعةً. هي <b>صدقة لله</b>، نرجو بها وجهه الكريم، وأن ينفع بها كل من قرأ أو استمع أو تعلّم.
+                </p>
+                <p>
+                    إذا انتفعتَ بها، فادعُ لنا بظهر الغيب، فالدعاءُ خيرُ هديةٍ بين المسلمين.
+                </p>
+            </div>
+        </div>
+
+        <!-- صانع المنصة -->
+        <div class="about-section">
+            <div class="section-title">
+                <div class="ic">✍️</div>
+                <h2>صانع المنصة</h2>
+            </div>
+            <div class="author-card">
+                <div class="author-avatar"><span>س</span></div>
+                <div class="author-info">
+                    <div class="name">سيف بن عمران</div>
+                    <div class="nick">أبو البراء المصري</div>
+                    <a href="https://wa.me/201142077109" target="_blank" rel="noopener noreferrer" class="whatsapp">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        تواصل واتساب
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- دعاء ختامي -->
+        <div class="dua-block">
+            <div class="dua-icon">🤲</div>
+            اللهمَّ اجعل هذا العملَ خالصًا لوجهك الكريم،<br>
+            وانفع به المسلمين في كل مكان،<br>
+            واجعله في ميزانِ حسناتِنا يوم لا ينفع مالٌ ولا بنون.
+            <span class="dua-by">— سبيل الهدى</span>
+        </div>
+
+        <!-- اقتباس -->
+        <div class="verse-block">
+            ﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾
+            <span class="verse-ref">— سورة طه: ١١٤</span>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-quote">
+            <span>ﷲ</spanالله أكبر — والعزة لله ولرسوله وللمؤمنين
+        </div>
+        <div class="footer-bottom">
+            <small>© <span id="year"></span> سبيل الهدى — صدقة لله</small>
+        </div>
+    </footer>
+
+    <button class="fab fab-top" id="backToTop" aria-label="الأعلى">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"/>
+            <polyline points="5 12 12 5 19 12"/>
+        </svg>
+    </button>
+
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            window.addEventListener('scroll', () => {
+                backToTop.classList.toggle('visible', window.pageYOffset > 400);
+            });
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    </script>
+
+</body>
+</html>
