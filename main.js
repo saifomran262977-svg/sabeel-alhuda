@@ -53,7 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
 // ═══════════════════════════════════════════
 // 3. القائمة الجانبية
 // ═══════════════════════════════════════════
-var menuBtn = document.getElementById('menuBtn');
+
+    var menuBtn = document.getElementById('menuBtn');
 var navMenu = document.getElementById('navMenu');
 var navOverlay = document.getElementById('navOverlay');
 
@@ -91,7 +92,6 @@ if (navMenu) {
         link.onclick = closeMenu;
     });
 }
-    
 
     // ═══════════════════════════════════════════
     // 4. زر تغيير المظهر
