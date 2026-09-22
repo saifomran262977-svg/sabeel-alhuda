@@ -1506,3 +1506,155 @@ body.light-mode .pwa-install-banner {
         font-size: 4rem;
     }
 }
+/* ═══════════════════════════════════════════════════════════════
+   إصلاح مشكلة اختفاء المحتوى أثناء اللمس والتمرير على الجوال
+   (تعطيل backdrop-filter نهائيًا على الأجهزة المحمولة)
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px), (hover: none), (pointer: coarse) {
+
+    /* تعطيل التأثير الزجاجي عن كل العناصر */
+    *,
+    *::before,
+    *::after {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* إعطاء خلفيات صلبة للعناصر التي كانت تستخدم الزجاج */
+    .book-card,
+    .brother-card,
+    .contact-card,
+    .news-card,
+    .hadith-card,
+    .scholar-card,
+    .athkar-card,
+    .card,
+    .card-item,
+    .tool-item,
+    .info-section,
+    .about-section,
+    .content-section,
+    .quote-section,
+    .hero-stats,
+    .counter-box,
+    .info-bar,
+    .counter,
+    .footer,
+    .topbar,
+    .nav-menu,
+    .scholar-hero,
+    .about-hero,
+    .contact-hero,
+    .news-header,
+    .athkar-header,
+    .hadith-header,
+    .scholars-header,
+    .quran-header,
+    .mushaf-page,
+    .login-card,
+    .author-card,
+    .info-cell,
+    .info-box,
+    .book-box,
+    .feature-item,
+    .point-list li,
+    .isnad-box,
+    .meta-item,
+    .response-item,
+    .dua-block,
+    .verse-block,
+    .note-block,
+    .search-box input,
+    .whatsapp-btn,
+    .whatsapp-number,
+    .scholar-tab,
+    .cat-btn,
+    .filter-btn,
+    .nav-surah-btn,
+    .scholar-nav-btn,
+    .back-scholars,
+    .read-btn,
+    .play-btn {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(15, 21, 36, 0.97) !important;
+    }
+
+    /* الوضع الفاتح */
+    body.light-mode .book-card,
+    body.light-mode .brother-card,
+    body.light-mode .contact-card,
+    body.light-mode .news-card,
+    body.light-mode .hadith-card,
+    body.light-mode .scholar-card,
+    body.light-mode .athkar-card,
+    body.light-mode .card,
+    body.light-mode .card-item,
+    body.light-mode .tool-item,
+    body.light-mode .info-section,
+    body.light-mode .about-section,
+    body.light-mode .content-section,
+    body.light-mode .hero-stats,
+    body.light-mode .counter-box,
+    body.light-mode .info-bar,
+    body.light-mode .counter,
+    body.light-mode .info-cell,
+    body.light-mode .info-box,
+    body.light-mode .book-box,
+    body.light-mode .feature-item,
+    body.light-mode .response-item,
+    body.light-mode .author-card,
+    body.light-mode .search-box input {
+        background: rgba(255, 255, 255, 0.98) !important;
+    }
+
+    /* الترويسة والقائمة الجانبية */
+    .topbar {
+        background: rgba(10, 14, 26, 0.98) !important;
+    }
+
+    body.light-mode .topbar {
+        background: rgba(248, 250, 252, 0.98) !important;
+    }
+
+    .nav-menu {
+        background: #0f1524 !important;
+    }
+
+    body.light-mode .nav-menu {
+        background: #f1f5f9 !important;
+    }
+
+    /* تعطيل الحركات الثقيلة على الجوال */
+    .ambient-3,
+    .ambient-4,
+    .stars-overlay {
+        display: none !important;
+    }
+
+    /* إصلاح إضافي: تعطيل transform على البطاقات أثناء التمرير */
+    .athkar-card,
+    .hadith-card,
+    .news-card,
+    .scholar-card,
+    .card-item,
+    .tool-item {
+        transform: none !important;
+        animation: none !important;
+        opacity: 1 !important;
+    }
+
+    /* إصلاح إضافي: ضمان ظهور النصوص */
+    .athkar-text,
+    .hadith-text,
+    .news-content,
+    .card-item p,
+    .tool-item p,
+    .scholar-bio {
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+}
