@@ -76,7 +76,57 @@
 '        scroll-behavior: auto !important;',
 '    }',
         ].join('\n');
+// ═══ تحسين أداء القوائم الطويلة ═══
+style.textContent += '\n' + [
+    '@media (max-width: 1024px), (hover: none), (pointer: coarse) {',
 
+    '    /* تعطيل حركة الدخول على البطاقات */',
+    '    .hadith-card, .athkar-card, .news-card, .scholar-card,',
+    '    .book-card, .brother-card, .card-item, .tool-item {',
+    '        animation: none !important;',
+    '        transition: none !important;',
+    '        opacity: 1 !important;',
+    '        transform: none !important;',
+    '        will-change: auto !important;',
+    '        contain: layout paint style !important;',
+    '    }',
+
+    '    /* تعطيل تأثير اللمعان على البطاقات */',
+    '    .hadith-card::before, .athkar-card::before, .news-card::before,',
+    '    .scholar-card::before, .book-card::before, .brother-card::before,',
+    '    .card-item::before, .tool-item::before {',
+    '        display: none !important;',
+    '    }',
+
+    '    /* تعطيل الشريط الجانبي الملون */',
+    '    .hadith-card::after, .athkar-card::after, .news-card::after,',
+    '    .scholar-card::after, .book-card::after {',
+    '        display: none !important;',
+    '    }',
+
+    '    /* تعطيل كل الحركات داخل البطاقات */',
+    '    .hadith-card *, .athkar-card *, .news-card *, .scholar-card * {',
+    '        animation: none !important;',
+    '        transition: none !important;',
+    '    }',
+
+    '    /* تعطيل الظلال */',
+    '    .hadith-card, .athkar-card, .news-card, .scholar-card {',
+    '        box-shadow: none !important;',
+    '    }',
+
+    '    /* تحسين رسم النصوص */',
+    '    .hadith-text, .athkar-text, .news-content {',
+    '        text-rendering: optimizeSpeed !important;',
+    '        -webkit-font-smoothing: auto !important;',
+    '    }',
+
+    '    /* تسريع القوائم الطويلة */',
+    '    .hadith-list, .athkar-list, .news-list, .scholars-grid {',
+    '        contain: layout style !important;',
+    '    }',
+    '}',
+].join('\n');
         document.head.appendChild(style);
     }
 
