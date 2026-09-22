@@ -196,10 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ═══════════════════════════════════════════
-    // 8. تأثيرات الظهور عند التمرير
-    // ═══════════════════════════════════════════
-    if ('IntersectionObserver' in window) {
+    /
         const revealElements = document.querySelectorAll('.section, .card-item, .tool-item, .quote-section');
 
         const revealObserver = new IntersectionObserver((entries) => {
