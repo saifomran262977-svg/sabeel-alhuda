@@ -1,0 +1,24 @@
+/* ═══ components.css — مكونات إضافية ═══ */
+
+/* حركات إضافية */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* تحسينات عامة */
+.no-scroll {
+    overflow: hidden;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-2 { margin-top: 8px; }
+.mt-4 { margin-top: 16px; }
+.mb-4 { margin-bottom: 16px; }
