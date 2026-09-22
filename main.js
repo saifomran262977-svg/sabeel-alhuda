@@ -49,42 +49,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { passive: true });
     }
 
-    // ═══════════════════════════════════════════
-    // 3. القائمة الجانبية
-    // ═══════════════════════════════════════════
-    var menuBtn = document.getElementById('menuBtn');
-    var navMenu = document.getElementById('navMenu');
-    var navOverlay = document.getElementById('navOverlay');
+    
+// ═══════════════════════════════════════════
+// 3. القائمة الجانبية
+// ═══════════════════════════════════════════
+var menuBtn = document.getElementById('menuBtn');
+var navMenu = document.getElementById('navMenu');
+var navOverlay = document.getElementById('navOverlay');
 
-    console.log('📋 [القائمة] زر:', !!menuBtn, 'قائمة:', !!navMenu);
+function openMenu() {
+    if (navMenu) navMenu.classList.add('active');
+    if (navOverlay) navOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+}
 
-    if (menuBtn && navMenu) {
-        menuBtn.onclick = function(e) {
-            e.preventDefault();
-            console.log('👆 ضغط على القائمة');
-            navMenu.classList.toggle('active');
-            if (navOverlay) navOverlay.classList.toggle('active');
-        };
-    }
+function closeMenu() {
+    if (navMenu) navMenu.classList.remove('active');
+    if (navOverlay) navOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+}
 
-    if (navOverlay && navMenu) {
-        navOverlay.onclick = function() {
-            navMenu.classList.remove('active');
-            navOverlay.classList.remove('active');
-        };
-    }
+if (menuBtn) {
+    menuBtn.onclick = function(e) {
+        e.preventDefault();
+        if (navMenu && navMenu.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    };
+}
 
-    if (navMenu) {
+if (navOverlay) {
+    navOverlay.onclick = closeMenu;
+}
+
+if (navMenu) {
     navMenu.querySelectorAll('a').forEach(function(link) {
-        link.onclick = function() {
-            navMenu.classList.remove('active');
-            if (navOverlay) navOverlay.classList.remove('active');
-            document.body.classList.remove('menu-open');
-            document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
-        };
+        link.onclick = closeMenu;
     });
-    }
+}
     
 
     // ═══════════════════════════════════════════
