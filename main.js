@@ -75,13 +75,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (navMenu) {
-        navMenu.querySelectorAll('a').forEach(function(link) {
-            link.onclick = function() {
-                navMenu.classList.remove('active');
-                if (navOverlay) navOverlay.classList.remove('active');
-            };
-        });
-}
+    navMenu.querySelectorAll('a').forEach(function(link) {
+        link.onclick = function() {
+            navMenu.classList.remove('active');
+            if (navOverlay) navOverlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        };
+    });
+    }
     
 
     // ═══════════════════════════════════════════
