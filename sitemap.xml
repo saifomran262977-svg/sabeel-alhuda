@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    <!-- الصفحة الرئيسية -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- القرآن الكريم -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/quran.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.95</priority>
+    </url>
+
+    <!-- صفحة السورة -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/surah.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- السنّة النبوية -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/hadith.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.95</priority>
+    </url>
+
+    <!-- أهل العلم -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/scholars.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- الإمام أحمد بن حنبل -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/ahmad.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- شيخ الإسلام ابن تيمية -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/ibn-taymiyyah.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- الإمام ابن القيم -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/ibn-qayyim.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- الإمام محمد بن عبد الوهاب -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/abdulwahhab.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.85</priority>
+    </url>
+
+    <!-- الأذكار -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/athkar.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- الأخبار -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/news.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- عن المنصة -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/about.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- التواصل -->
+    <url>
+        <loc>https://saifomran262977-svg.github.io/sabeel-alhuda/contact.html</loc>
+        <lastmod>2026-09-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+</urlset>
