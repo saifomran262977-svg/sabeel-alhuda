@@ -1,0 +1,56 @@
+# ═══════════════════════════════════════════════════════════════
+# robots.txt — سبيل الهدى | Sabeel Al-Huda
+# ═══════════════════════════════════════════════════════════════
+# تعليمات محركات البحث للتعامل مع الموقع
+# ═══════════════════════════════════════════════════════════════
+
+# ─── القاعدة العامة: السماح للجميع ───
+User-agent: *
+Allow: /
+
+# ─── الملفات التي لا نريد فهرستها ───
+Disallow: /login.html
+Disallow: /auth.js
+Disallow: /config.js
+Disallow: /sw.js
+Disallow: /manifest.json
+Disallow: /.git/
+
+# ─── منع بعض محركات البحث المزعجة ───
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# ─── السماح لمحركات البحث الكبرى ───
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# ─── موقع خريطة الموقع ───
+Sitemap: https://saifomran262977-svg.github.io/sabeel-alhuda/sitemap.xml
+
+# ═══════════════════════════════════════════════════════════════
+# نسأل الله التوفيق والقبول
+# ═══════════════════════════════════════════════════════════════
