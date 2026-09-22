@@ -1,7 +1,9 @@
 /**
  * ═══════════════════════════════════════════════════════════════
  * سبيل الهدى | Sabeel Al-Huda
- * main.js - حل نهائي: إزالة Service Worker والكاش
+ * main.js — الحل النهائي المضمون
+ * ═══════════════════════════════════════════════════════════════
+ * يحقن CSS إصلاحي في الصفحة + يُفعّل اللمس والتمرير
  * ═══════════════════════════════════════════════════════════════
  */
 
@@ -9,71 +11,110 @@
     'use strict';
 
     // ═══════════════════════════════════════════
-    // 1. إلغاء Service Worker + مسح الكاش
+    // 1. حقن CSS فوري لتفعيل اللمس (قبل أي شيء)
     // ═══════════════════════════════════════════
-    var CLEAN_FLAG = 'sabeel_cleaned_v3';
+    function injectFixCSS() {
+        // حذف أي حقن سابق
+        var old = document.getElementById('sabeel-fix-css');
+        if (old) old.remove();
 
-    if (!localStorage.getItem(CLEAN_FLAG)) {
-        console.log('🧹 بدء التنظيف...');
+        var style = document.createElement('style');
+        style.id = 'sabeel-fix-css';
+        style.textContent = [
+            '/* تفعيل اللمس والتمرير بكل أشكاله */',
+            'html, body {',
+            '    touch-action: auto !important;',
+            '    -webkit-touch-callout: default !important;',
+            '    user-select: auto !important;',
+            '    -webkit-user-select: auto !important;',
+            '    overflow-y: auto !important;',
+            '    overflow-x: hidden !important;',
+            '    position: static !important;',
+            '    height: auto !important;',
+            '    min-height: 100vh !important;',
+            '    width: 100% !important;',
+            '    max-width: 100% !important;',
+            '}',
+            'body {',
+            '    -webkit-overflow-scrolling: touch !important;',
+            '    overscroll-behavior-y: auto !important;',
+            '}',
+            '*, *::before, *::after {',
+            '    touch-action: auto !important;',
+            '    -webkit-touch-callout: default !important;',
+            '    user-select: auto !important;',
+            '    -webkit-user-select: auto !important;',
+            '}',
+            'a, button, .cat-btn, .filter-btn, .tab-btn {',
+            '    touch-action: manipulation !important;',
+            '}',
+            'main, .hero, .section, .cards-grid, .card-item, .tool-item {',
+            '    touch-action: auto !important;',
+            '    overflow: visible !important;',
+            '}',
+            '/* القائمة الجانبية */',
+            '.nav-menu:not(.active) {',
+            '    pointer-events: none !important;',
+            '    visibility: hidden !important;',
+            '}',
+            '.nav-menu.active {',
+            '    pointer-events: auto !important;',
+            '    visibility: visible !important;',
+            '    touch-action: pan-y !important;',
+            '}',
+            '.nav-menu a {',
+            '    touch-action: manipulation !important;',
+            '}',
+            '/* إلغاء أي position: fixed على body */',
+            'body.menu-open, body.no-scroll {',
+            '    position: static !important;',
+            '    overflow: auto !important;',
+            '    height: auto !important;',
+            '}',
+        ].join('\n');
 
-        var cleanupDone = false;
-
-        function finishCleanup() {
-            if (cleanupDone) return;
-            cleanupDone = true;
-            localStorage.setItem(CLEAN_FLAG, 'true');
-            console.log('✅ تم التنظيف، إعادة تحميل...');
-            window.location.reload(true);
-        }
-
-        // 1. إلغاء كل Service Workers
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(regs) {
-                var promises = regs.map(function(reg) {
-                    console.log('🗑️ إلغاء SW:', reg.scope);
-                    return reg.unregister();
-                });
-                return Promise.all(promises);
-            }).then(function() {
-                // 2. مسح كل الكاش
-                if ('caches' in window) {
-                    return caches.keys().then(function(names) {
-                        return Promise.all(names.map(function(name) {
-                            console.log('🗑️ حذف كاش:', name);
-                            return caches.delete(name);
-                        }));
-                    });
-                }
-            }).then(finishCleanup).catch(finishCleanup);
-        } else {
-            finishCleanup();
-        }
-
-        // حماية: بعد 2 ثانية، أكمل حتى لو تعطل شيء
-        setTimeout(finishCleanup, 2000);
-
-        // إيقاف التنفيذ مؤقتًا حتى انتهاء التنظيف
-        return;
+        document.head.appendChild(style);
     }
 
+    // تنفيذ فوري
+    injectFixCSS();
+
+    // إعادة الحقن عند أي تغيير في الصفحة
+    window.addEventListener('pageshow', injectFixCSS);
+    window.addEventListener('focus', function() {
+        setTimeout(injectFixCSS, 100);
+    });
+
     // ═══════════════════════════════════════════
-    // 2. إلغاء قيود التمرير
+    // 2. إلغاء أي قيود برمجية
     // ═══════════════════════════════════════════
-    function unlockScroll() {
-        document.body.style.overflow = '';
-        document.body.style.overflowX = '';
-        document.body.style.overflowY = '';
-        document.body.style.position = '';
-        document.body.style.height = '';
-        document.documentElement.style.overflow = '';
-        document.documentElement.style.overflowX = '';
-        document.documentElement.style.overflowY = '';
-        document.documentElement.style.height = '';
-        document.body.classList.remove('no-scroll', 'menu-open');
-        document.documentElement.classList.remove('no-scroll', 'menu-open');
+    function forceUnlock() {
+        try {
+            // إزالة inline styles التي قد تكون عالقة
+            document.body.style.removeProperty('overflow');
+            document.body.style.removeProperty('overflow-x');
+            document.body.style.removeProperty('overflow-y');
+            document.body.style.removeProperty('position');
+            document.body.style.removeProperty('height');
+            document.body.style.removeProperty('width');
+            document.documentElement.style.removeProperty('overflow');
+            document.documentElement.style.removeProperty('overflow-x');
+            document.documentElement.style.removeProperty('overflow-y');
+            document.documentElement.style.removeProperty('height');
+
+            // إزالة الكلاسات العالقة
+            document.body.classList.remove('no-scroll', 'menu-open', 'locked');
+            document.documentElement.classList.remove('no-scroll', 'menu-open', 'locked');
+        } catch (e) {}
     }
 
-    unlockScroll();
+    // تنفيذ فوري + عند أي حدث
+    forceUnlock();
+    window.addEventListener('pageshow', forceUnlock);
+    window.addEventListener('load', forceUnlock);
+    window.addEventListener('focus', function() {
+        setTimeout(forceUnlock, 100);
+    });
 
     // ═══════════════════════════════════════════
     // 3. إخفاء شاشة التحميل
@@ -92,12 +133,11 @@
 
     setTimeout(hidePreloader, 1000);
     window.addEventListener('load', function() {
-        unlockScroll();
         setTimeout(hidePreloader, 300);
     });
 
     // ═══════════════════════════════════════════
-    // 4. القائمة الجانبية
+    // 4. القائمة الجانبية (بدون تجميد)
     // ═══════════════════════════════════════════
     function initMenu() {
         var menuBtn = document.getElementById('menuBtn');
@@ -109,13 +149,12 @@
         function openMenu() {
             navMenu.classList.add('active');
             if (navOverlay) navOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeMenu() {
             navMenu.classList.remove('active');
             if (navOverlay) navOverlay.classList.remove('active');
-            unlockScroll();
+            forceUnlock();
         }
 
         menuBtn.onclick = function(e) {
@@ -139,11 +178,9 @@
     // 5. الميزات الأخرى
     // ═══════════════════════════════════════════
     function initFeatures() {
-        // السنة
         var yearEl = document.getElementById('year');
         if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-        // زر المظهر
         var themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             try {
@@ -160,7 +197,6 @@
             };
         }
 
-        // زر الأعلى
         var backToTop = document.getElementById('backToTop');
         if (backToTop) {
             var ticking = false;
@@ -179,17 +215,15 @@
             };
         }
 
-        // شريط التقدم
-        var scrollProgress = document.getElementById('scrollProgress');
-        if (scrollProgress) {
+        var sp = document.getElementById('scrollProgress');
+        if (sp) {
             window.addEventListener('scroll', function() {
                 var st = window.pageYOffset || document.documentElement.scrollTop;
                 var dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                scrollProgress.style.width = (dh > 0 ? (st / dh) * 100 : 0) + '%';
+                sp.style.width = (dh > 0 ? (st / dh) * 100 : 0) + '%';
             }, { passive: true });
         }
 
-        // الاقتباسات
         if (typeof siteConfig !== 'undefined' && siteConfig.quotes && siteConfig.quotes.length > 0) {
             var qs = document.querySelector('.quote-section');
             if (qs) {
@@ -209,6 +243,8 @@
     // ═══════════════════════════════════════════
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
+            injectFixCSS();
+            forceUnlock();
             initMenu();
             initFeatures();
         });
