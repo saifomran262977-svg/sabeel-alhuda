@@ -1,7 +1,7 @@
 /**
  * ═══════════════════════════════════════════════════════════════
  * سبيل الهدى | Sabeel Al-Huda
- * المحرك الرئيسي - main.js (النسخة الكاملة)
+ * المحرك الرئيسي - main.js (النسخة النهائية)
  * ═══════════════════════════════════════════════════════════════
  */
 
@@ -11,15 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ [main.js] DOM جاهز');
 
     // ═══════════════════════════════════════════
-    // 1. شاشة التحميل
+    // 1. إخفاء شاشة التحميل
     // ═══════════════════════════════════════════
     var preloader = document.getElementById('preloader');
-
     function hidePreloader() {
         if (preloader && preloader.parentNode) {
             preloader.classList.add('hidden');
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
             setTimeout(function() {
                 if (preloader && preloader.parentNode) {
                     preloader.parentNode.removeChild(preloader);
@@ -27,8 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
         }
     }
-
-    setTimeout(hidePreloader, 1500);
+    setTimeout(hidePreloader, 1200);
     window.addEventListener('load', function() {
         setTimeout(hidePreloader, 300);
     });
@@ -94,22 +90,18 @@ document.addEventListener('DOMContentLoaded', function() {
     if (themeToggle) {
         try {
             var savedTheme = localStorage.getItem('sabeel_theme');
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-mode');
-            }
+            if (savedTheme === 'light') document.body.classList.add('light-mode');
         } catch (e) {}
 
         themeToggle.onclick = function() {
             document.body.classList.toggle('light-mode');
             var isLight = document.body.classList.contains('light-mode');
-            try {
-                localStorage.setItem('sabeel_theme', isLight ? 'light' : 'dark');
-            } catch (e) {}
+            try { localStorage.setItem('sabeel_theme', isLight ? 'light' : 'dark'); } catch (e) {}
         };
     }
 
     // ═══════════════════════════════════════════
-    // 5. السنة في التذييل
+    // 5. السنة
     // ═══════════════════════════════════════════
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -123,11 +115,8 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('scroll', function() {
             if (!btTicking) {
                 window.requestAnimationFrame(function() {
-                    if (window.pageYOffset > 300) {
-                        backToTop.classList.add('visible');
-                    } else {
-                        backToTop.classList.remove('visible');
-                    }
+                    if (window.pageYOffset > 300) backToTop.classList.add('visible');
+                    else backToTop.classList.remove('visible');
                     btTicking = false;
                 });
                 btTicking = true;
@@ -140,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ═══════════════════════════════════════════
-    // 7. الاقتباسات الديناميكية
+    // 7. الاقتباسات
     // ═══════════════════════════════════════════
     if (typeof siteConfig !== 'undefined' && siteConfig.quotes && siteConfig.quotes.length > 0) {
         var quoteSection = document.querySelector('.quote-section');
@@ -148,31 +137,15 @@ document.addEventListener('DOMContentLoaded', function() {
             var quoteText = quoteSection.querySelector('.quote-text');
             var quoteAuthor = quoteSection.querySelector('.quote-author');
             if (quoteText && quoteAuthor) {
-                var randomQuote = siteConfig.quotes[Math.floor(Math.random() * siteConfig.quotes.length)];
-                quoteText.textContent = randomQuote.text;
-                quoteAuthor.textContent = "— " + randomQuote.ref;
-
-                var currentIdx = siteConfig.quotes.indexOf(randomQuote);
-                setInterval(function() {
-                    currentIdx = (currentIdx + 1) % siteConfig.quotes.length;
-                    var next = siteConfig.quotes[currentIdx];
-                    quoteText.style.transition = 'opacity 0.4s';
-                    quoteAuthor.style.transition = 'opacity 0.4s';
-                    quoteText.style.opacity = '0';
-                    quoteAuthor.style.opacity = '0';
-                    setTimeout(function() {
-                        quoteText.textContent = next.text;
-                        quoteAuthor.textContent = "— " + next.ref;
-                        quoteText.style.opacity = '1';
-                        quoteAuthor.style.opacity = '1';
-                    }, 400);
-                }, 30000);
+                var rq = siteConfig.quotes[Math.floor(Math.random() * siteConfig.quotes.length)];
+                quoteText.textContent = rq.text;
+                quoteAuthor.textContent = "— " + rq.ref;
             }
         }
     }
 
     // ═══════════════════════════════════════════
-    // 8. تحديث معلومات المنصة
+    // 8. معلومات المنصة
     // ═══════════════════════════════════════════
     if (typeof siteConfig !== 'undefined' && siteConfig.site) {
         var brandTitle = document.querySelector('.logo-text h1');
@@ -181,6 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (brandSubtitle && siteConfig.site.tagline) brandSubtitle.textContent = siteConfig.site.tagline;
     }
 
-    console.log('✅ [main.js] كل الميزات جاهزة');
+    console.log('✅ [main.js] جاهز');
 
 });
