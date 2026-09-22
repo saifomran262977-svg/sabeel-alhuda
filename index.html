@@ -324,6 +324,41 @@
     <script src="config.js"></script>
     <script src="main.js"></script>
     <script src="auth.js"></script>
+<!-- إخفاء شاشة التحميل — حل مضمون -->
+<script>
+    (function() {
+        function hidePreloader() {
+            var p = document.getElementById('preloader');
+            if (p) {
+                p.style.opacity = '0';
+                p.style.visibility = 'hidden';
+                p.style.display = 'none';
+                p.classList.add('hidden');
+                setTimeout(function() {
+                    if (p && p.parentNode) {
+                        p.parentNode.removeChild(p);
+                    }
+                }, 500);
+            }
+        }
 
+        setTimeout(hidePreloader, 1500);
+
+        if (document.readyState === 'complete') {
+            setTimeout(hidePreloader, 500);
+        } else {
+            window.addEventListener('load', function() {
+                setTimeout(hidePreloader, 300);
+            });
+        }
+
+        setTimeout(function() {
+            var p = document.getElementById('preloader');
+            if (p) {
+                p.remove();
+            }
+        }, 3000);
+    })();
+</script>
 </body>
                   </html>
