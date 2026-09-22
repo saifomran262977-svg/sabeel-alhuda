@@ -1,0 +1,128 @@
+{
+    "name": "سبيل الهدى — منصة إسلامية شاملة",
+    "short_name": "سبيل الهدى",
+    "description": "منصة إسلامية شاملة — قرآن، حديث، علماء، أذكار، أخبار. خدمية ودعوية.",
+    "lang": "ar",
+    "dir": "rtl",
+    "start_url": "/sabeel-alhuda/index.html",
+    "scope": "/sabeel-alhuda/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0a0e1a",
+    "theme_color": "#0a0e1a",
+    "categories": ["education", "books", "lifestyle", "religion"],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "256x256",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "القرآن الكريم",
+            "short_name": "القرآن",
+            "description": "اقرأ سور القرآن الكريم كاملة",
+            "url": "/sabeel-alhuda/quran.html",
+            "icons": [
+                {
+                    "src": "icon.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "السنّة النبوية",
+            "short_name": "الحديث",
+            "description": "مكتبة الأحاديث النبوية الصحيحة",
+            "url": "/sabeel-alhuda/hadith.html",
+            "icons": [
+                {
+                    "src": "icon.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "أهل العلم",
+            "short_name": "العلماء",
+            "description": "سير أعلام الأمة ومؤلفاتهم",
+            "url": "/sabeel-alhuda/scholars.html",
+            "icons": [
+                {
+                    "src": "icon.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "الأذكار والأدعية",
+            "short_name": "الأذكار",
+            "description": "أذكار الصباح والمساء مع عدّاد إلكتروني",
+            "url": "/sabeel-alhuda/athkar.html",
+            "icons": [
+                {
+                    "src": "icon.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        }
+    ],
+    "related_applications": [],
+    "iarc_rating_id": "",
+    "screenshots": []
+}
