@@ -63,59 +63,39 @@ if (document.readyState === 'loading') {
         });
     }
 
-    // ═══════════════════════════════════════════
-    // 3. القائمة الجانبية للهاتف
-    // ═══════════════════════════════════════════
-    const menuBtn = document.getElementById('menuBtn');
-    const navMenu = document.getElementById('navMenu');
-    const navOverlay = document.getElementById('navOverlay');
+   // ═══════════════════════════════════════════
+// 3. القائمة الجانبية (مُصلَح)
+// ═══════════════════════════════════════════
+var menuBtn = document.getElementById('menuBtn');
+var navMenu = document.getElementById('navMenu');
+var navOverlay = document.getElementById('navOverlay');
 
-    function openMenu() {
-        if (navMenu) navMenu.classList.add('active');
-        if (navOverlay) navOverlay.classList.add('active');
-        if (menuBtn) {
-            menuBtn.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>`;
+if (menuBtn) {
+    menuBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (navMenu) {
+            navMenu.classList.toggle('active');
+            if (navOverlay) navOverlay.classList.toggle('active');
         }
-        document.body.style.overflow = 'hidden';
-    }
+    });
+}
 
-    function closeMenu() {
+if (navOverlay) {
+    navOverlay.addEventListener('click', function() {
         if (navMenu) navMenu.classList.remove('active');
-        if (navOverlay) navOverlay.classList.remove('active');
-        if (menuBtn) {
-            menuBtn.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>`;
-        }
-        document.body.style.overflow = '';
-    }
+        navOverlay.classList.remove('active');
+    });
+}
 
-    if (menuBtn) {
-        menuBtn.addEventListener('click', () => {
-            if (navMenu && navMenu.classList.contains('active')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
+if (navMenu) {
+    navMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+            if (navOverlay) navOverlay.classList.remove('active');
         });
-    }
-
-    if (navOverlay) {
-        navOverlay.addEventListener('click', closeMenu);
-    }
-
-    if (navMenu) {
-        navMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-    }
+    });
+} 
 
     // إغلاق بزر Escape
     document.addEventListener('keydown', (e) => {
