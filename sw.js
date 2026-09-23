@@ -33,6 +33,7 @@ const DYNAMIC_ASSETS = [
     './config.js',
     './main.js',
     './auth.js'
+     './offline.html'
 ];
 
 // ملفات ثابتة (يمكن تخزينها دائمًا)
@@ -117,28 +118,33 @@ self.addEventListener('fetch', (event) => {
     }
 
     // ─── الملفات الخاصة بالمنصة: Network-First ───
-    if (url.origin === self.location.origin) {
-        event.respondWith(
-            fetch(request).then((res) => {
-                // احفظ نسخة جديدة في الكاش
-                if (res && res.status === 200 && res.type !== 'opaque') {
-                    const clone = res.clone();
-                    caches.open(CACHE_NAME).then((c) => c.put(request, clone));
+if (url.origin === self.location.origin) {
+    event.respondWith(
+        fetch(request).then((res) => {
+            // احفظ نسخة جديدة في الكاش
+            if (res && res.status === 200 && res.type !== 'opaque') {
+                const clone = res.clone();
+                caches.open(CACHE_NAME).then((c) => c.put(request, clone));
+            }
+            return res;
+        }).catch(() => {
+            // فشل الاتصال → استخدم الكاش
+            return caches.match(request).then((cached) => {
+                if (cached) return cached;
+                // إذا كنا نُحمّل صفحة HTML، أرجع index أولاً ثم offline
+                if (request.mode === 'navigate') {
+                    return caches.match('./index.html').then((indexCached) => {
+                        if (indexCached) return indexCached;
+                        return caches.match('./offline.html');
+                    });
                 }
-                return res;
-            }).catch(() => {
-                // فشل الاتصال → استخدم الكاش
-                return caches.match(request).then((cached) => {
-                    if (cached) return cached;
-                    // إذا كنا نُحمّل صفحة HTML، أرجع index
-                    if (request.mode === 'navigate') {
-                        return caches.match('./index.html');
-                    }
-                });
-            })
-        );
-        return;
-    }
+                return caches.match('./offline.html');
+            });
+        })
+    );
+    return;
+}
+    
 
     // ─── طلبات أخرى ───
     event.respondWith(fetch(request).catch(() => caches.match(request)));
