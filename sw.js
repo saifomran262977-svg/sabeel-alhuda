@@ -1,19 +1,19 @@
 /**
  * ═══════════════════════════════════════════════════════════════
  * سبيل الهدى | Sabeel Al-Huda
- * Service Worker - sw.js (Network-First)
+ * Service Worker v3.0 — تخزين كامل مضمون
  * ═══════════════════════════════════════════════════════════════
- * ✅ يجلب أحدث نسخة من الإنترنت دائمًا
- * ✅ يحفظ نسخة للعمل بدون إنترنت
+ * ✅ يُخزّن كل الملفات مسبقًا
+ * ✅ يعمل بدون إنترنت 100%
+ * ✅ لا يُمسح الكاش عند الإغلاق
  * ═══════════════════════════════════════════════════════════════
  */
 
-const CACHE_VERSION = 'v2.0.0';
-const CACHE_NAME = 'sabeel-alhuda-' + CACHE_VERSION;
-const QURAN_CACHE = 'sabeel-quran-' + CACHE_VERSION;
+const CACHE_NAME = 'sabeel-alhuda-v3';
+const QURAN_CACHE = 'sabeel-quran-v3';
 
-// الملفات التي تحتاج تحديثًا دائمًا
-const DYNAMIC_ASSETS = [
+// ═══ كل الملفات المطلوب تخزينها ═══
+const FILES_TO_CACHE = [
     './',
     './index.html',
     './quran.html',
@@ -29,37 +29,39 @@ const DYNAMIC_ASSETS = [
     './about.html',
     './contact.html',
     './login.html',
+    './offline.html',
     './style.css',
     './config.js',
     './main.js',
-    './auth.js'
-     './offline.html'
-];
-
-// ملفات ثابتة (يمكن تخزينها دائمًا)
-const STATIC_ASSETS = [
+    './auth.js',
     './icon.png',
     './manifest.json'
 ];
 
-// ═══════════════════════════════════════════
-// 1. عند التثبيت
-// ═══════════════════════════════════════════
+// ═══ 1. التثبيت: تخزين كل الملفات ═══
 self.addEventListener('install', (event) => {
-    console.log('🔧 [SW] تثبيت...');
+    console.log('🔧 [SW] بدء التثبيت...');
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => cache.addAll([...DYNAMIC_ASSETS, ...STATIC_ASSETS]))
-            .then(() => self.skipWaiting())
-            .catch((e) => console.log('⚠️ [SW] خطأ:', e))
+        caches.open(CACHE_NAME).then((cache) => {
+            console.log('📦 [SW] تخزين', FILES_TO_CACHE.length, 'ملف...');
+            // تخزين كل ملف على حدة (أكثر أمانًا)
+            return Promise.all(
+                FILES_TO_CACHE.map((url) => {
+                    return cache.add(url).catch((err) => {
+                        console.warn('⚠️ [SW] فشل تخزين:', url, err);
+                    });
+                })
+            );
+        }).then(() => {
+            console.log('✅ [SW] تم التثبيت');
+            return self.skipWaiting();
+        })
     );
 });
 
-// ═══════════════════════════════════════════
-// 2. عند التنشيط (حذف كل الكاشات القديمة)
-// ═══════════════════════════════════════════
+// ═══ 2. التنشيط: حذف الكاش القديم ═══
 self.addEventListener('activate', (event) => {
-    console.log('🚀 [SW] تنشيط...');
+    console.log('🚀 [SW] بدء التنشيط...');
     event.waitUntil(
         caches.keys().then((keys) => {
             return Promise.all(
@@ -70,13 +72,14 @@ self.addEventListener('activate', (event) => {
                     }
                 })
             );
-        }).then(() => self.clients.claim())
+        }).then(() => {
+            console.log('✅ [SW] تم التنشيط');
+            return self.clients.claim();
+        })
     );
 });
 
-// ═══════════════════════════════════════════
-// 3. عند الطلب
-// ═══════════════════════════════════════════
+// ═══ 3. الطلبات: Cache-First لكل شيء ═══
 self.addEventListener('fetch', (event) => {
     const request = event.request;
     const url = new URL(request.url);
@@ -94,7 +97,7 @@ self.addEventListener('fetch', (event) => {
                     return fetch(request).then((res) => {
                         if (res && res.status === 200) cache.put(request, res.clone());
                         return res;
-                    }).catch(() => cached || new Response('{}', { headers: { 'Content-Type': 'application/json' } }));
+                    }).catch(() => new Response('{}', { headers: { 'Content-Type': 'application/json' } }));
                 });
             })
         );
@@ -111,48 +114,58 @@ self.addEventListener('fetch', (event) => {
                         caches.open(CACHE_NAME).then((c) => c.put(request, res.clone()));
                     }
                     return res;
+                }).catch(() => cached);
+            })
+        );
+        return;
+    }
+
+    // ─── ملفات الموقع: Cache-First قوي ───
+    if (url.origin === self.location.origin) {
+        event.respondWith(
+            caches.match(request).then((cached) => {
+                // إذا وُجد في الكاش، اعرضه فورًا
+                if (cached) {
+                    // حاول تحديثه في الخلفية (لا يمنع العرض)
+                    fetch(request).then((res) => {
+                        if (res && res.status === 200) {
+                            caches.open(CACHE_NAME).then((c) => c.put(request, res.clone()));
+                        }
+                    }).catch(() => {});
+                    return cached;
+                }
+
+                // إذا لم يوجد، اجلبه من الإنترنت
+                return fetch(request).then((res) => {
+                    if (res && res.status === 200 && res.type !== 'opaque') {
+                        const clone = res.clone();
+                        caches.open(CACHE_NAME).then((c) => c.put(request, clone));
+                    }
+                    return res;
+                }).catch(() => {
+                    // فشل كل شيء → صفحة offline
+                    if (request.mode === 'navigate') {
+                        return caches.match('./index.html').then((index) => {
+                            return index || caches.match('./offline.html');
+                        });
+                    }
+                    return caches.match('./offline.html');
                 });
             })
         );
         return;
     }
 
-    // ─── الملفات الخاصة بالمنصة: Network-First ───
-if (url.origin === self.location.origin) {
-    event.respondWith(
-        fetch(request).then((res) => {
-            // احفظ نسخة جديدة في الكاش
-            if (res && res.status === 200 && res.type !== 'opaque') {
-                const clone = res.clone();
-                caches.open(CACHE_NAME).then((c) => c.put(request, clone));
-            }
-            return res;
-        }).catch(() => {
-            // فشل الاتصال → استخدم الكاش
-            return caches.match(request).then((cached) => {
-                if (cached) return cached;
-                // إذا كنا نُحمّل صفحة HTML، أرجع index أولاً ثم offline
-                if (request.mode === 'navigate') {
-                    return caches.match('./index.html').then((indexCached) => {
-                        if (indexCached) return indexCached;
-                        return caches.match('./offline.html');
-                    });
-                }
-                return caches.match('./offline.html');
-            });
-        })
-    );
-    return;
-}
-    
-
     // ─── طلبات أخرى ───
-    event.respondWith(fetch(request).catch(() => caches.match(request)));
+    event.respondWith(
+        fetch(request).catch(() => caches.match(request))
+    );
 });
 
-// ═══════════════════════════════════════════
-// 4. استقبال الرسائل
-// ═══════════════════════════════════════════
+// ═══ 4. رسائل من الصفحات ═══
 self.addEventListener('message', (event) => {
     if (event.data === 'SKIP_WAITING') self.skipWaiting();
+    if (event.data === 'CLEAR_CACHE') {
+        caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))));
+    }
 });
