@@ -2395,3 +2395,138 @@ html, body {
     touch-action: pan-y !important;
     -webkit-overflow-scrolling: touch !important;
 }
+/* ═══════════════════════════════════════════════════════════════
+   الحل النهائي: تمكين التمرير على البطاقات
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. البطاقات: تسمح بالتمرير */
+.athkar-card,
+.hadith-card,
+.news-card,
+.scholar-card,
+.card-item,
+.tool-item,
+.book-card,
+.brother-card,
+.info-section,
+.about-section,
+.content-section,
+.author-card,
+.quote-section,
+.hero-stats,
+.counter-box,
+.scholar-page .content-section {
+    touch-action: pan-y !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    pointer-events: auto !important;
+}
+
+/* 2. النصوص داخل البطاقات: تسمح بالتمرير ولا تُحدَّد */
+.athkar-card *,
+.hadith-card *,
+.news-card *,
+.scholar-card *,
+.card-item *,
+.tool-item *,
+.book-card *,
+.brother-card *,
+.info-section *,
+.about-section *,
+.content-section *,
+.author-card *,
+.quote-section * {
+    touch-action: pan-y !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    pointer-events: none !important;
+}
+
+/* 3. الأزرار والروابط: تعمل باللمس */
+.athkar-card button,
+.athkar-card a,
+.hadith-card button,
+.hadith-card a,
+.news-card button,
+.news-card a,
+.scholar-card button,
+.scholar-card a,
+.card-item a,
+.tool-item a,
+.book-card a,
+.brother-card a,
+.info-section a,
+.about-section a,
+.content-section a,
+.author-card a,
+.quote-section a,
+.cat-btn,
+.filter-btn,
+.copy-btn-small,
+.icon-action,
+.read-btn,
+.action-btn,
+.play-btn,
+.scholar-read,
+.section-link,
+.whatsapp-btn,
+.whatsapp-number,
+.start-btn,
+.back-btn,
+.scholar-nav-btn,
+.nav-surah-btn {
+    touch-action: manipulation !important;
+    -webkit-touch-callout: default !important;
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+    pointer-events: auto !important;
+    cursor: pointer;
+}
+
+/* 4. النصوص داخل الأزرار: تعمل */
+.athkar-card button *,
+.athkar-card a *,
+.hadith-card button *,
+.hadith-card a *,
+.news-card a *,
+.scholar-card a *,
+.card-item a *,
+.tool-item a *,
+.book-card a *,
+.brother-card a * {
+    pointer-events: auto !important;
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+}
+
+/* 5. الحاويات الرئيسية */
+.athkar-list,
+.hadith-list,
+.news-list,
+.scholars-grid,
+.cards-grid,
+.tools-grid,
+main {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* 6. الصفحة كلها */
+html, body {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* 7. السماح بتحديد النصوص في الأماكن المهمة */
+.athkar-text,
+.hadith-text,
+.news-content,
+.scholar-bio,
+.dua-block,
+.section-text {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
