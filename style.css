@@ -2189,3 +2189,113 @@ img, video, iframe, svg {
     overscroll-behavior: contain !important;
     touch-action: pan-y !important;
 }
+/* ═══════════════════════════════════════════════════════════════
+   إصلاح مشكلة اللمس على البطاقات والأيقونات
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. تأكد أن كل العناصر قابلة للتمرير */
+.athkar-card,
+.hadith-card,
+.news-card,
+.scholar-card,
+.card-item,
+.tool-item,
+.book-card,
+.brother-card,
+.info-section,
+.about-section,
+.content-section,
+.author-card,
+.quote-section,
+.hero-stats,
+.counter-box,
+.info-cell,
+.book-box,
+.feature-item,
+.response-item,
+.isnad-box,
+.meta-item,
+.athkar-text,
+.hadith-text,
+.news-content,
+.scholar-bio,
+.section-text,
+.info-text,
+.card-item p,
+.tool-item p,
+.athkar-virtue,
+.athkar-source,
+.dua-block,
+.verse-block,
+.note-block,
+.chip,
+.badge {
+    touch-action: pan-y !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    pointer-events: auto !important;
+}
+
+/* 2. الأزرار والروابط */
+.card-item a,
+.tool-item a,
+.athkar-card a,
+.hadith-card a,
+.book-card a,
+.brother-card a,
+button,
+.cat-btn,
+.filter-btn,
+.tab-btn,
+.copy-btn-small,
+.icon-action,
+.read-btn,
+.action-btn,
+.play-btn,
+.scholar-read,
+.section-link,
+.whatsapp-btn,
+.whatsapp-number,
+.login-btn,
+.submit-btn,
+.start-btn,
+.back-btn,
+.back-home,
+.back-scholars,
+.back-btn-top,
+.scholar-nav-btn,
+.nav-surah-btn {
+    touch-action: manipulation !important;
+}
+
+/* 3. تعطيل أي سلوك يمنع التمرير */
+*, *::before, *::after {
+    -webkit-touch-callout: default !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
+
+/* 4. الحاويات الرئيسية */
+main,
+.athkar-page,
+.hadith-page,
+.news-page,
+.scholars-page,
+.scholar-page,
+.quran-page,
+.about-page,
+.contact-page {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* 5. القوائم */
+.athkar-list,
+.hadith-list,
+.news-list,
+.scholars-grid,
+.cards-grid,
+.tools-grid {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+}
