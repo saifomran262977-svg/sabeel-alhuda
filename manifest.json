@@ -1,10 +1,10 @@
 {
     "name": "سبيل الهدى — منصة إسلامية شاملة",
     "short_name": "سبيل الهدى",
-    "description": "منصة إسلامية شاملة — قرآن، حديث، علماء، أذكار، أخبار. خدمية ودعوية.",
+    "description": "منصة إسلامية شاملة — قرآن، حديث، علماء، أذكار، أخبار",
     "lang": "ar",
     "dir": "rtl",
-    "start_url": "/sabeel-alhuda/index.html",
+    "start_url": "/sabeel-alhuda/",
     "scope": "/sabeel-alhuda/",
     "display": "standalone",
     "orientation": "portrait",
@@ -121,8 +121,5 @@
                 }
             ]
         }
-    ],
-    "related_applications": [],
-    "iarc_rating_id": "",
-    "screenshots": []
+    ]
 }
