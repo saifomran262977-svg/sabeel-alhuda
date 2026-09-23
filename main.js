@@ -75,6 +75,22 @@
 '    * {',
 '        scroll-behavior: auto !important;',
 '    }',
+          '/* إصلاح اللمس على البطاقات */',
+'    .athkar-card, .hadith-card, .news-card, .scholar-card,',
+'    .card-item, .tool-item, .book-card, .brother-card,',
+'    .info-section, .about-section, .content-section {',
+'        touch-action: pan-y !important;',
+'        pointer-events: auto !important;',
+'    }',
+'    .athkar-card *, .hadith-card *, .news-card *, .scholar-card *,',
+'    .card-item *, .tool-item * {',
+'        touch-action: pan-y !important;',
+'    }',
+'    .athkar-card button, .athkar-card a,',
+'    .hadith-card button, .hadith-card a,',
+'    .card-item a, .tool-item a {',
+'        touch-action: manipulation !important;',
+'    }',  
         ].join('\n');
 // ═══ تحسين أداء القوائم الطويلة ═══
 style.textContent += '\n' + [
