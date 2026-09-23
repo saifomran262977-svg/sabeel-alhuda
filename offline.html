@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0a0e1a">
+    <title>لا يوجد اتصال | سبيل الهدى</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', system-ui, sans-serif;
+            background: #0a0e1a;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+        }
+        .icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4));
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #d4af37;
+            margin-bottom: 12px;
+        }
+        p {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+        button {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #d4af37, #a8842a);
+            color: #000;
+            font-weight: 800;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+        }
+        .verse {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(212, 175, 55, 0.3);
+            font-family: serif;
+            font-size: 0.9rem;
+            color: #d4af37;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📡</div>
+        <h1>لا يوجد اتصال بالإنترنت</h1>
+        <p>
+            يبدو أنك غير متصل بالإنترنت.<br>
+            يرجى الاتصال بالإنترنت ثم إعادة المحاولة.
+        </p>
+        <button onclick="location.reload()">إعادة المحاولة</button>
+        <div class="verse">
+            ﴿ وَمَن يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَن يُقْبَلَ مِنْهُ ﴾
+        </div>
+    </div>
+</body>
+</html>
